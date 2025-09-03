@@ -17,6 +17,20 @@
 
 #include "filesystem.h"
 
+// Fallbacks if build system did not provide string-literal macros
+#define ORGB_STRINGIZE2(x) #x
+#define ORGB_STRINGIZE(x) ORGB_STRINGIZE2(x)
+#ifdef GIT_COMMIT_ID
+#  define ORGB_GIT_COMMIT_ID_STR ORGB_STRINGIZE(GIT_COMMIT_ID)
+#else
+#  define ORGB_GIT_COMMIT_ID_STR "local"
+#endif
+#ifdef GIT_COMMIT_DATE
+#  define ORGB_GIT_COMMIT_DATE_STR ORGB_STRINGIZE(GIT_COMMIT_DATE)
+#else
+#  define ORGB_GIT_COMMIT_DATE_STR "unknown"
+#endif
+
 const char* LogManager::log_codes[] = {"FATAL:", "ERROR:", "Warning:", "Info:", "Verbose:", "Debug:", "Trace:", "Dialog:"};
 
 const char* TimestampPattern = "%04d%02d%02d_%02d%02d%02d";
@@ -156,7 +170,7 @@ void LogManager::configure(json config, const filesystem::path& defaultDir)
             | Print Git Commit info, version, etc.          |
             \*---------------------------------------------*/
             log_stream << "    OpenRGB" << std::endl;
-            log_stream << "    Commit: " << GIT_COMMIT_ID << " from " << GIT_COMMIT_DATE << std::endl;
+            log_stream << "    Commit: " << ORGB_GIT_COMMIT_ID_STR << " from " << ORGB_GIT_COMMIT_DATE_STR << std::endl;
             log_stream << "    Launched: " << time_string << std::endl;
             log_stream << "====================================================================================================" << std::endl;
             log_stream << std::endl;
