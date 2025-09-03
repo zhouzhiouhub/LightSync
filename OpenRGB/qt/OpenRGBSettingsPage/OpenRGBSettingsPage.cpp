@@ -816,9 +816,7 @@ void OpenRGBSettingsPage::ConfigureAutoStart()
     }
     else
     {
-        std::string desc = "OpenRGB ";
-        desc += VERSION_STRING;
-        desc += ", for controlling RGB lighting.";
+        std::string desc = "OpenRGB, for controlling RGB lighting.";
 
         std::string arguments = "";
 

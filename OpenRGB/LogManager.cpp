@@ -155,7 +155,7 @@ void LogManager::configure(json config, const filesystem::path& defaultDir)
             /*---------------------------------------------*\
             | Print Git Commit info, version, etc.          |
             \*---------------------------------------------*/
-            log_stream << "    OpenRGB v" << VERSION_STRING << std::endl;
+            log_stream << "    OpenRGB" << std::endl;
             log_stream << "    Commit: " << GIT_COMMIT_ID << " from " << GIT_COMMIT_DATE << std::endl;
             log_stream << "    Launched: " << time_string << std::endl;
             log_stream << "====================================================================================================" << std::endl;

@@ -22,38 +22,15 @@ CONFIG +=   c++17                                                               
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 #-----------------------------------------------------------------------------------------------#
-# Application Configuration                                                                     #
+# Application Configuration (no version or git dependency)                                      #
 #-----------------------------------------------------------------------------------------------#
-MAJOR       = 0
-MINOR       = 9
-SUFFIX      = git
-
-SHORTHASH   = $$system("git rev-parse --short=7 HEAD")
-LASTTAG     = "release_"$$MAJOR"."$$MINOR
-COMMAND     = "git rev-list --count "$$LASTTAG"..HEAD"
-COMMITS     = $$system($$COMMAND)
-
-VERSION_NUM = $$MAJOR"."$$MINOR"."$$COMMITS
-VERSION_STR = $$MAJOR"."$$MINOR
+VERSION_NUM = 0.0.0
+VERSION_STR = Custom Build
 
 VERSION_DEB = $$VERSION_NUM
 VERSION_WIX = $$VERSION_NUM
 VERSION_AUR = $$VERSION_NUM
 VERSION_RPM = $$VERSION_NUM
-
-equals(SUFFIX, "git") {
-VERSION_STR = $$VERSION_STR"+ ("$$SUFFIX$$COMMITS")"
-VERSION_DEB = $$VERSION_DEB"~git"$$SHORTHASH
-VERSION_AUR = $$VERSION_AUR".g"$$SHORTHASH
-VERSION_RPM = $$VERSION_RPM"^git"$$SHORTHASH
-} else {
-    !isEmpty(SUFFIX) {
-VERSION_STR = $$VERSION_STR"+ ("$$SUFFIX")"
-VERSION_DEB = $$VERSION_DEB"~"$$SUFFIX
-VERSION_AUR = $$VERSION_AUR"."$$SUFFIX
-VERSION_RPM = $$VERSION_RPM"^"$$SUFFIX
-    }
-}
 
 TARGET      = OpenRGB
 TEMPLATE    = app
@@ -73,15 +50,11 @@ win32:BUILDDATE         = $$system(date /t)
 linux:BUILDDATE         = $$system(date -R -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}")
 freebsd:BUILDDATE       = $$system(date -j -R -r "${SOURCE_DATE_EPOCH:-$(date +%s)}")
 macx:BUILDDATE          = $$system(date -j -R -r "${SOURCE_DATE_EPOCH:-$(date +%s)}")
-GIT_COMMIT_ID           = $$system(git log -n 1 --pretty=format:"%H")
-GIT_COMMIT_DATE         = $$system(git log -n 1 --pretty=format:"%ci")
 
-unix {
-    GIT_BRANCH          = $$system(sh scripts/git-get-branch.sh)
-}
-else {
-    GIT_BRANCH          = $$system(powershell -ExecutionPolicy Bypass -File scripts/git-get-branch.ps1)
-}
+# Disable git lookups; provide stable placeholders
+GIT_COMMIT_ID           = nogit
+GIT_COMMIT_DATE         = unknown
+GIT_BRANCH              = local
 
 message("GIT_BRANCH: "$$GIT_BRANCH)
 DEFINES +=                                                                                      \

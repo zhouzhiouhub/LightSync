@@ -765,8 +765,7 @@ bool ResourceManager::AttemptLocalConnection()
 
     auto_connection_client = new NetworkClient(ResourceManager::get()->GetRGBControllers());
 
-    std::string titleString = "OpenRGB ";
-    titleString.append(VERSION_STRING);
+    std::string titleString = "OpenRGB";
 
     auto_connection_client->SetName(titleString.c_str());
     auto_connection_client->StartClient();
@@ -1755,8 +1754,7 @@ void ResourceManager::InitCoroutine()
         {
             NetworkClient * client = new NetworkClient(rgb_controllers);
 
-            std::string titleString = "OpenRGB ";
-            titleString.append(VERSION_STRING);
+            std::string titleString = "OpenRGB";
 
             std::string     client_ip   = client_settings["clients"][client_idx]["ip"];
             unsigned short  client_port = client_settings["clients"][client_idx]["port"];

@@ -388,9 +388,7 @@ std::string QuoteIfNecessary(std::string str)
 void OptionHelp()
 {
     std::string help_text;
-    help_text += "OpenRGB ";
-    help_text += VERSION_STRING;
-    help_text += ", for controlling RGB lighting.\n";
+    help_text += "OpenRGB, for controlling RGB lighting.\n";
     help_text += "Usage: OpenRGB (--device [--mode] [--color])...\n";
     help_text += "\n";
     help_text += "Options:\n";
@@ -438,11 +436,9 @@ void OptionHelp()
 void OptionVersion()
 {
     std::string version_text;
-    version_text += "OpenRGB ";
-    version_text += VERSION_STRING;
-    version_text += ", for controlling RGB lighting.\n";
+    version_text += "OpenRGB, for controlling RGB lighting.\n";
     version_text += "  Version:\t\t ";
-    version_text += VERSION_STRING;
+    version_text += "Custom Build";
     version_text += "\n  Build Date\t\t ";
     version_text += BUILDDATE_STRING;
     version_text += "\n  Git Commit ID\t\t ";
@@ -1390,8 +1386,7 @@ unsigned int cli_pre_detection(int argc, char* argv[])
                 port_val = std::stoi(port);
             }
 
-            std::string titleString = "OpenRGB ";
-            titleString.append(VERSION_STRING);
+            std::string titleString = "OpenRGB";
 
             client->SetIP(ip.c_str());
             client->SetName(titleString.c_str());
@@ -1592,9 +1587,7 @@ unsigned int cli_pre_detection(int argc, char* argv[])
         {
             if (argument != "")
             {
-                std::string desc = "OpenRGB ";
-                desc += VERSION_STRING;
-                desc += ", for controlling RGB lighting.";
+                std::string desc = "OpenRGB, for controlling RGB lighting.";
 
                 AutoStart       auto_start("OpenRGB");
                 AutoStartInfo   auto_start_interface;
