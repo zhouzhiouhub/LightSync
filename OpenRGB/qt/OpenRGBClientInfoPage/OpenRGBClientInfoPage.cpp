@@ -249,7 +249,6 @@ void OpenRGBClientInfoPage::on_ClientConnectButton_clicked()
     NetworkClient * rgb_client = new NetworkClient(ResourceManager::get()->GetRGBControllers());
 
     std::string titleString = "OpenRGB";
-    std::string titleString = "OpenRGB";
 
     rgb_client->SetIP(ip.c_str());
     rgb_client->SetName(titleString.c_str());

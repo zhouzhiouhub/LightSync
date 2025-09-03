@@ -11,7 +11,7 @@
 
 #include "SkydimoHIDController.h"
 #include <hidapi.h>
-#include "Logger.h"
+#include "LogManager.h"
 #include <vector>
 #include <thread>
 #include <array>
@@ -168,7 +168,7 @@ bool SkydimoHIDController::SetLEDs(const std::vector<RGBColor>& colors)
         // Send the current batch of RGB data
         if(!SendRGBData(rgb_data_bytes.data(), idx))
         {
-            SKLOG_ERROR(devLog) << "[HID] SendRGBData failed at offset " << idx;
+            LOG_ERROR("[HID] SendRGBData failed at offset %d", idx);
             return false;
         }
     }
@@ -182,7 +182,7 @@ bool SkydimoHIDController::SetLEDs(const std::vector<RGBColor>& colors)
     bool ok = SendEndCommand(led_count);
     if(!ok)
     {
-        SKLOG_ERROR(devLog) << "[HID] SendEndCommand failed, total_leds=" << led_count;
+        LOG_ERROR("[HID] SendEndCommand failed, total_leds=%d", led_count);
     }
     return ok;
 }
@@ -288,7 +288,7 @@ bool SkydimoHIDController::SendEndCommand(int total_leds)
             return true;
         }
     }
-    SKLOG_ERROR(devLog) << "[HID] SendEndCommand failed, legacy-64, total_leds=" << total_leds;
+    LOG_ERROR("[HID] SendEndCommand failed, legacy-64, total_leds=%d", total_leds);
     return false;
 }
 
@@ -298,7 +298,7 @@ void SkydimoHIDController::EnforceUpdateRate()
     | Limit update rate to 60 FPS to prevent HID flooding  |
     \*-----------------------------------------------------*/
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    std::chrono::milliseconds time_since_last_update = 
+    std::chrono::milliseconds time_since_last_update =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - last_update_time);
 
     if(time_since_last_update.count() < 16)  // 60 FPS = ~16ms per frame

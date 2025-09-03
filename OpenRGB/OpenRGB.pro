@@ -245,6 +245,7 @@ SOURCES +=                                                                      
     RGBController/RGBController_Dummy.cpp                                                       \
     RGBController/RGBControllerKeyNames.cpp                                                     \
     RGBController/RGBController_Network.cpp                                                     \
+    Controllers/SkydimoController/SkydimoDetectionGuard.cpp                                    \
 
 RESOURCES +=                                                                                    \
     qt/resources.qrc                                                                            \
