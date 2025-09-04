@@ -17,6 +17,9 @@
 #    include <QtWidgets/QLabel>
 #    include <QtCore/QDir>
 #    include <QtCore/QStandardPaths>
+#    include <QtCore/QString>
+#    include <QtCore/QMetaObject>
+#    include <QtCore/Qt>
 #  else
 // Minimal stubs to satisfy static analysis when Qt headers are not available
 #    include <string>
@@ -40,7 +43,7 @@ class QLayout;
 class QMouseEvent;
 class QResizeEvent;
 
-namespace Qt { enum AlignmentFlag { AlignCenter = 0x0004 }; }
+namespace Qt { enum AlignmentFlag { AlignCenter = 0x0004 }; enum ConnectionType { AutoConnection, DirectConnection, QueuedConnection }; }
 
 class QWidget {
 public:
@@ -65,6 +68,13 @@ public:
     void setCentralWidget(QWidget*) {}
     QWidget* centralWidget() { return nullptr; }
     void resize(int, int) {}
+};
+
+class QMetaObject {
+public:
+    static bool invokeMethod(void*, const char*, int) { return true; }
+    template<typename F>
+    static bool invokeMethod(void*, F f, int) { f(); return true; }
 };
 
 class QApplication {
@@ -110,9 +120,12 @@ public:
     QLayout* layout() { return nullptr; }
 };
 
+class QString; // forward decl for stub signatures
+
 class QLabel : public QWidget {
 public:
     explicit QLabel(const char*, QWidget* = nullptr) {}
+    explicit QLabel(const QString&, QWidget* = nullptr) {}
     void setAlignment(int) {}
 };
 
@@ -123,6 +136,7 @@ public:
     bool isEmpty() const { return false; }
     std::u32string toStdU32String() const { return std::u32string(); }
     friend QString operator+(const QString&, const char*) { return QString(); }
+    static QString fromUtf8(const char*) { return QString(); }
 };
 
 class QDir {

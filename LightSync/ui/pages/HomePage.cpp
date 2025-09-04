@@ -8,6 +8,7 @@
 #include "HomePage.h"
 
 #include "../../app/qt_compat.h"
+#include <QLabel>
 
 HomePage::HomePage(QWidget* parent)
     : QWidget(parent)
@@ -15,6 +16,10 @@ HomePage::HomePage(QWidget* parent)
     root_ = new QVBoxLayout();
     root_->setSpacing(10);
     root_->setContentsMargins(10,10,10,10);
+    empty_label_ = new QLabel(QString::fromUtf8(u8"No devices found. Connect a supported RGB device or start the OpenRGB core, then retry."), this);
+    empty_label_->setAlignment(Qt::AlignCenter);
+    root_->addWidget(empty_label_);
+    root_->addStretch(1);
     setLayout(root_);
 }
 
@@ -47,6 +52,15 @@ void HomePage::Relayout()
         }
         root_->setSpacing(10);
         root_->setContentsMargins(10,10,10,10);
+    }
+
+    // Empty state
+    if(devices_.empty()) {
+        empty_label_ = new QLabel(QString::fromUtf8(u8"No devices found. Start the OpenRGB server or connect a device, then retry."), this);
+        empty_label_->setAlignment(Qt::AlignCenter);
+        root_->addWidget(empty_label_);
+        root_->addStretch(1);
+        return;
     }
 
     int card_w = 99;

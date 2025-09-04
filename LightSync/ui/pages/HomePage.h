@@ -24,6 +24,7 @@ public:
 private:
     QVBoxLayout* root_ {nullptr};
     QHBoxLayout* current_row_ {nullptr};
+    QLabel* empty_label_ {nullptr};
     std::function<void(int, bool)> on_device_chosen_;
     std::vector<DeviceSummary> devices_;
 protected:

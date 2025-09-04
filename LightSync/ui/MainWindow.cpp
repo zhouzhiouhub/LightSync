@@ -9,33 +9,13 @@
 
 #include "../app/qt_compat.h"
 #include "pages/HomePage.h"
-// Avoid requiring QtCore debug in linters
-
-// OpenRGB core headers (guard for builds without full OpenRGB include path)
-#if defined(__has_include) && __has_include("SPDWrapper.h") && __has_include("../../OpenRGB/ResourceManager.h")
-#  include "../../OpenRGB/ResourceManager.h"
-#  include "../../OpenRGB/RGBController/RGBController.h"
-#  define HAVE_OPENRGB_CORE 1
-#else
-#  define HAVE_OPENRGB_CORE 0
-   enum device_type { DEVICE_TYPE_UNKNOWN = 0, DEVICE_TYPE_KEYBOARD, DEVICE_TYPE_MOUSE, DEVICE_TYPE_HEADSET, DEVICE_TYPE_LEDSTRIP, DEVICE_TYPE_MOTHERBOARD, DEVICE_TYPE_GPU };
-   struct RGBController { device_type type { DEVICE_TYPE_UNKNOWN }; std::string GetName() const { return "Device"; } };
-   class ResourceManager {
-   public:
-       static ResourceManager* get() { static ResourceManager inst; return &inst; }
-       void Initialize(bool, bool, bool, bool) {}
-       void RegisterDeviceListChangeCallback(void (*)(void*), void*) {}
-       std::vector<RGBController*>& GetRGBControllers() { static std::vector<RGBController*> empty; return empty; }
-   };
-#endif
+// OpenRGB core headers (use project-relative paths per .pro INCLUDEPATH)
+#include "../../OpenRGB/ResourceManager.h"
+#include "../../OpenRGB/RGBController/RGBController.h"
 
 // Use logging macros only when OpenRGB headers are present
-#if defined(__has_include) && __has_include("OpenRGB/LogManager.h")
-# include "OpenRGB/LogManager.h"
-# define LS_LOG_INFO(msg) LOG_INFO("%s", msg)
-#else
-#  define LS_LOG_INFO(msg) do {} while(0)
-#endif
+#include "../../OpenRGB/LogManager.h"
+#define LS_LOG_INFO(msg) LOG_INFO("%s", msg)
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -44,12 +24,18 @@ MainWindow::MainWindow(QWidget* parent)
     HomePage* home = new HomePage(this);
     setCentralWidget(home);
 
-    // Initialize OpenRGB core in-process and start device detection when available
-#if HAVE_OPENRGB_CORE
-    ResourceManager::get()->Initialize(false, true, false, false);
+    // Initialize OpenRGB core; prefer connecting to a running OpenRGB SDK server
+    // Enable console logging for visibility in Creator's Application Output
+    LogManager::get()->setVerbosity(LL_INFO);
+    LogManager::get()->log_console_enabled = true;
+
+    // Try connecting to OpenRGB SDK server (preferred), also allow local detection
+    // tryConnect=true, detectDevices=true, startServer=false, applyPostOptions=false
+    ResourceManager::get()->Initialize(true, true, false, false);
     ResourceManager::get()->RegisterDeviceListChangeCallback(
         [](void* arg){ static_cast<MainWindow*>(arg)->OnDeviceListChanged(); }, this);
-#endif
+    // Ensure an initial refresh if detection already finished very quickly
+    OnDeviceListChanged();
 
     // Initial population
     RefreshDevices();
@@ -66,7 +52,8 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::OnDeviceListChanged()
 {
-    RefreshDevices();
+    // Ensure UI updates happen on the GUI thread
+    QMetaObject::invokeMethod(this, [this]() { RefreshDevices(); }, Qt::QueuedConnection);
 }
 
 static std::string device_type_to_str_local(device_type t)
