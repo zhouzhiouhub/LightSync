@@ -31,6 +31,15 @@
 #include "StringUtils.h"
 
 /*---------------------------------------------------------*\
+| Some Windows headers define 'interface' as a macro for     |
+| COM declarations, which breaks parameter names like        |
+| 'int interface' in function signatures. Undefine it here.  |
+\*---------------------------------------------------------*/
+#ifdef interface
+#undef interface
+#endif
+
+/*---------------------------------------------------------*\
 | Translation Strings                                       |
 \*---------------------------------------------------------*/
 const char* I2C_ERR_WIN =   QT_TRANSLATE_NOOP("ResourceManager",

@@ -28,6 +28,16 @@
 
 using json = nlohmann::json;
 
+/*---------------------------------------------------------*\
+| Windows headers (via transitive includes) may define a     |
+| macro named 'interface' for COM declarations. This breaks  |
+| identifiers named 'interface' in function signatures below.|
+| Undefine it if present.                                    |
+\*---------------------------------------------------------*/
+#ifdef interface
+#undef interface
+#endif
+
 #define HID_INTERFACE_ANY   -1
 #define HID_USAGE_ANY       -1
 #define HID_USAGE_PAGE_ANY  -1

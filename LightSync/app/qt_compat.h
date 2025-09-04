@@ -21,20 +21,50 @@
 // Minimal stubs to satisfy static analysis when Qt headers are not available
 #    include <string>
 
+// Qt meta-object macros stubs for linters
+#    ifndef Q_OBJECT
+#      define Q_OBJECT
+#    endif
+#    ifndef slots
+#      define slots
+#    endif
+#    ifndef signals
+#      define signals public
+#    endif
+
 class QVBoxLayout;
+class QHBoxLayout;
+class QGridLayout;
+class QLayoutItem;
+class QLayout;
+class QMouseEvent;
+class QResizeEvent;
+
+namespace Qt { enum AlignmentFlag { AlignCenter = 0x0004 }; }
 
 class QWidget {
 public:
+    explicit QWidget(QWidget* = nullptr) {}
     virtual ~QWidget() {}
     void setLayout(QVBoxLayout*) {}
+    void setLayout(QGridLayout*) {}
+    void show() {}
+    virtual void mousePressEvent(QMouseEvent*) {}
+    virtual void resizeEvent(QResizeEvent*) {}
+    int width() const { return 800; }
+    void setMinimumSize(int, int) {}
+    void setStyleSheet(const char*) {}
+    void setFixedSize(int, int) {}
+    void deleteLater() {}
 };
 
-class QMainWindow {
+class QMainWindow : public QWidget {
 public:
-    explicit QMainWindow(QWidget* = nullptr) {}
+    explicit QMainWindow(QWidget* p = nullptr) : QWidget(p) {}
     virtual ~QMainWindow() {}
     void setCentralWidget(QWidget*) {}
-    void show() {}
+    QWidget* centralWidget() { return nullptr; }
+    void resize(int, int) {}
 };
 
 class QApplication {
@@ -46,11 +76,44 @@ public:
 class QVBoxLayout {
 public:
     void addWidget(QWidget*) {}
+    void addLayout(QHBoxLayout*) {}
+    void setSpacing(int) {}
+    void setContentsMargins(int, int, int, int) {}
+    void setAlignment(QWidget*, int) {}
+    void addStretch(int = 0) {}
+    int count() const { return 0; }
+    QLayoutItem* takeAt(int) { return nullptr; }
+};
+
+class QHBoxLayout {
+public:
+    void addWidget(QWidget*) {}
+    void setSpacing(int) {}
+    void setContentsMargins(int, int, int, int) {}
+    void addStretch(int = 0) {}
+    int count() const { return 0; }
+    QLayoutItem* takeAt(int) { return nullptr; }
+};
+
+class QGridLayout {
+public:
+    void addWidget(QWidget*, int, int) {}
+    void setSpacing(int) {}
+    void setContentsMargins(int, int, int, int) {}
+    int count() const { return 0; }
+    QLayoutItem* takeAt(int) { return nullptr; }
+};
+
+class QLayoutItem {
+public:
+    QWidget* widget() { return nullptr; }
+    QLayout* layout() { return nullptr; }
 };
 
 class QLabel : public QWidget {
 public:
     explicit QLabel(const char*, QWidget* = nullptr) {}
+    void setAlignment(int) {}
 };
 
 class QString {
