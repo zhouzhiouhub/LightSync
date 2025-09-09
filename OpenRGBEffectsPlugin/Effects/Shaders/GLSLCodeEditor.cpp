@@ -2,6 +2,7 @@
 #include "ui_GLSLCodeEditor.h"
 #include "QGLSLHighlighter.hpp"
 #include "QGLSLCompleter.hpp"
+#include <QSyntaxStyle>
 #include "NewShaderPassTabHeader.h"
 #include "ShaderFileTabHeader.h"
 

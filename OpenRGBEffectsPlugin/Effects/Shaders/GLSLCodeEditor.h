@@ -2,10 +2,12 @@
 #define GLSLCODEEDITOR_H
 
 #include <QDialog>
+#include <map>
 #include "GLSLHighlighter.h"
 #include "ShaderProgram.h"
-#include "QCodeEditor.hpp"
 #include "ShaderPassEditor.h"
+
+class QSyntaxStyle;
 
 namespace Ui {
 class GLSLCodeEditor;

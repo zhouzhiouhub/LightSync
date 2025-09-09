@@ -2,9 +2,11 @@
 #define SHADERPASSEDITOR_H
 
 #include <QWidget>
-#include "QGLSLHighlighter.hpp"
-#include "QGLSLCompleter.hpp"
 #include "ShaderPass.h"
+
+class QSyntaxStyle;
+class QGLSLHighlighter;
+class QGLSLCompleter;
 
 namespace Ui {
 class ShaderPassEditor;

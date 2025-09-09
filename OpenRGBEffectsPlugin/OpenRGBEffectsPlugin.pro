@@ -37,7 +37,7 @@ SUFFIX      = git
 
 SHORTHASH   = $$system("git rev-parse --short=7 HEAD")
 LASTTAG     = "release_"$$MAJOR"."$$MINOR
-COMMAND     = "git rev-list --count "$$LASTTAG"..HEAD"
+COMMAND     = "git rev-list --count HEAD"
 COMMITS     = $$system($$COMMAND)
 
 VERSION_NUM = $$MAJOR"."$$MINOR"."$$COMMITS
@@ -105,6 +105,8 @@ INCLUDEPATH +=                                                                  
     ../OpenRGB/dependencies/json                                                                \
     ../OpenRGB/qt                                                                               \
     ../OpenRGB/i2c_smbus                                                                        \
+    ../OpenRGB/hidapi_wrapper                                                                    \
+    ../OpenRGB/SPDAccessor                                                                       \
     ../OpenRGB/net_port                                                                         \
 
 HEADERS +=                                                                                      \
@@ -235,16 +237,26 @@ HEADERS +=                                                                      
     Dependencies/chuck_fft/chuck_fft.h                                                          \
 
 #-----------------------------------------------------------------------------------------------#
-# SimplexNoise                                                                                  #
+# SimplexNoise (optional)                                                                        #
 #-----------------------------------------------------------------------------------------------#
-INCLUDEPATH +=                                                                                  \
-    Dependencies/SimplexNoise/src                                                               \
+NOISE_DIR = $$PWD/Dependencies/SimplexNoise/src
+exists($$NOISE_DIR/SimplexNoise.cpp) {
+    INCLUDEPATH +=                                                                              \
+        $$NOISE_DIR
 
-SOURCES +=                                                                                      \
-    Dependencies/SimplexNoise/src/SimplexNoise.cpp                                              \
+    SOURCES +=                                                                                  \
+        $$NOISE_DIR/SimplexNoise.cpp                                                            \
+        Effects/NoiseMap/NoiseMap.cpp
 
-HEADERS +=                                                                                      \
-    Dependencies/SimplexNoise/src/SimplexNoise.h                                                \
+    HEADERS +=                                                                                  \
+        $$NOISE_DIR/SimplexNoise.h                                                              \
+        Effects/NoiseMap/NoiseMap.h
+
+    FORMS +=                                                                                    \
+        Effects/NoiseMap/NoiseMap.ui
+} else {
+    message("SimplexNoise not found - disabling NoiseMap effect")
+}
 
 #-----------------------------------------------------------------------------------------------#
 # GUI and misc                                                                                  #
@@ -384,7 +396,6 @@ SOURCES +=                                                                      
     Effects/MotionPoint/MotionPoint.cpp                                                         \
     Effects/MotionPoints/MotionPoints.cpp                                                       \
     Effects/MovingPanes/MovingPanes.cpp                                                         \
-    Effects/NoiseMap/NoiseMap.cpp                                                               \
     Effects/Policing/Policing.cpp                                                               \
     Effects/RadialRainbow/RadialRainbow.cpp                                                     \
     Effects/Rain/Rain.cpp                                                                       \
@@ -394,15 +405,6 @@ SOURCES +=                                                                      
     Effects/RotatingBeam/RotatingBeam.cpp                                                       \
     Effects/RotatingRainbow/RotatingRainbow.cpp                                                 \
     Effects/Sequence/Sequence.cpp                                                               \
-    Effects/Shaders/NewShaderPassTabHeader.cpp                                                  \
-    Effects/Shaders/ShaderFileTabHeader.cpp                                                     \
-    Effects/Shaders/ShaderPass.cpp                                                              \
-    Effects/Shaders/ShaderPassEditor.cpp                                                        \
-    Effects/Shaders/ShaderProgram.cpp                                                           \
-    Effects/Shaders/Shaders.cpp                                                                 \
-    Effects/Shaders/ShaderRenderer.cpp                                                          \
-    Effects/Shaders/GLSLHighlighter.cpp                                                         \
-    Effects/Shaders/GLSLCodeEditor.cpp                                                          \
     Effects/SmoothBlink/SmoothBlink.cpp                                                         \
     Effects/SpectrumCycling/SpectrumCycling.cpp                                                 \
     Effects/SparkleFade/SparkleFade.cpp                                                         \
@@ -456,7 +458,6 @@ HEADERS +=                                                                      
     Effects/MotionPoint/MotionPoint.h                                                           \
     Effects/MotionPoints/MotionPoints.h                                                         \
     Effects/MovingPanes/MovingPanes.h                                                           \
-    Effects/NoiseMap/NoiseMap.h                                                                 \
     Effects/Policing/Policing.h                                                                 \
     Effects/RadialRainbow/RadialRainbow.h                                                       \
     Effects/Rain/Rain.h                                                                         \
@@ -466,16 +467,6 @@ HEADERS +=                                                                      
     Effects/RotatingBeam/RotatingBeam.h                                                         \
     Effects/RotatingRainbow/RotatingRainbow.h                                                   \
     Effects/Sequence/Sequence.h                                                                 \
-    Effects/Shaders/NewShaderPassTabHeader.h                                                    \
-    Effects/Shaders/ShaderFileTabHeader.h                                                       \
-    Effects/Shaders/ShaderPass.h                                                                \
-    Effects/Shaders/ShaderPassData.h                                                            \
-    Effects/Shaders/ShaderPassEditor.h                                                          \
-    Effects/Shaders/ShaderProgram.h                                                             \
-    Effects/Shaders/Shaders.h                                                                   \
-    Effects/Shaders/ShaderRenderer.h                                                            \
-    Effects/Shaders/GLSLHighlighter.h                                                           \
-    Effects/Shaders/GLSLCodeEditor.h                                                            \
     Effects/SmoothBlink/SmoothBlink.h                                                           \
     Effects/SparkleFade/SparkleFade.h                                                           \
     Effects/SpectrumCycling/SpectrumCycling.h                                                   \
@@ -526,7 +517,6 @@ FORMS +=                                                                        
     Effects/MotionPoint/MotionPoint.ui                                                          \
     Effects/MotionPoints/MotionPoints.ui                                                        \
     Effects/MovingPanes/MovingPanes.ui                                                          \
-    Effects/NoiseMap/NoiseMap.ui                                                                \
     Effects/RadialRainbow/RadialRainbow.ui                                                      \
     Effects/Rain/Rain.ui                                                                        \
     Effects/RandomMarquee/RandomMarquee.ui                                                      \
@@ -534,11 +524,6 @@ FORMS +=                                                                        
     Effects/RotatingBeam/RotatingBeam.ui                                                        \
     Effects/RotatingRainbow/RotatingRainbow.ui                                                  \
     Effects/Sequence/Sequence.ui                                                                \
-    Effects/Shaders/GLSLCodeEditor.ui                                                           \
-    Effects/Shaders/NewShaderPassTabHeader.ui                                                   \
-    Effects/Shaders/Shaders.ui                                                                  \
-    Effects/Shaders/ShaderFileTabHeader.ui                                                      \
-    Effects/Shaders/ShaderPassEditor.ui                                                         \
     Effects/SmoothBlink/SmoothBlink.ui                                                          \
     Effects/SparkleFade/SparkleFade.ui                                                          \
     Effects/SpectrumCycling/SpectrumCycling.ui                                                  \
@@ -576,6 +561,9 @@ TRANSLATIONS +=                                                                 
 # Windows  Configuration                                                                        #
 #-----------------------------------------------------------------------------------------------#
 win32:CONFIG += QTPLUGIN c++17
+
+win32:INCLUDEPATH += \
+    ../OpenRGB/dependencies/hidapi-win/include
 
 win32:CONFIG(debug, debug|release) {
     win32:DESTDIR = debug

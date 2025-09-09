@@ -1052,7 +1052,11 @@ void NetworkServer::ProcessRequest_ClientString(SOCKET client_sock, unsigned int
 
 void NetworkServer::ProcessRequest_RescanDevices()
 {
+#ifndef OPEN_RGB_EFFECTS_PLUGIN_LIBRARY
     ResourceManager::get()->DetectDevices();
+#else
+    // No-op when building plugin to avoid direct ResourceManager dependency
+#endif
 }
 
 void NetworkServer::SendReply_ControllerCount(SOCKET client_sock)
