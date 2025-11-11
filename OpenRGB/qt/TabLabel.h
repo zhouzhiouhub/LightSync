@@ -9,7 +9,9 @@
 
 #pragma once
 
-#include <QWidget>
+#include <QtCore/QByteArray>
+#include <QtCore/QString>
+#include <QtWidgets/QWidget>
 
 namespace Ui
 {
@@ -21,13 +23,17 @@ class TabLabel : public QWidget
     Q_OBJECT
 
 public:
-    TabLabel(int icon, QString name, char* original, char* context);
+    TabLabel(int icon,
+             const QString &displayName,
+             const QString &sourceText,
+             const char *context);
     ~TabLabel();
 
 private:
     Ui::TabLabel *ui;
-    char* label;
-    char* ctxt;
+    QString       baseText;
+    QByteArray    baseTextUtf8;
+    QByteArray    translationContext;
 
 private slots:
     void changeEvent(QEvent *event);

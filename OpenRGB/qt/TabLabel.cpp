@@ -7,14 +7,23 @@
 |   SPDX-License-Identifier: GPL-2.0-only                   |
 \*---------------------------------------------------------*/
 
-#include <QFontMetrics>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QEvent>
+#include <QtGui/QFont>
+#include <QtGui/QFontMetrics>
 #include "TabLabel.h"
 #include "OpenRGBFont.h"
 #include "ui_TabLabel.h"
 
-TabLabel::TabLabel(int icon, QString name, char* original, char* context) :
+TabLabel::TabLabel(int icon,
+                   const QString &name,
+                   const QString &sourceText,
+                   const char *context) :
     QWidget(nullptr),
-    ui(new Ui::TabLabel)
+    ui(new Ui::TabLabel),
+    baseText(sourceText),
+    baseTextUtf8(sourceText.toUtf8()),
+    translationContext(context ? QByteArray(context) : QByteArray())
 {
     ui->setupUi(this);
 
@@ -25,9 +34,6 @@ TabLabel::TabLabel(int icon, QString name, char* original, char* context) :
     ui->icon->setText(OpenRGBFont::icon(icon));
 
     ui->name->setText(name);
-
-    label   = original;
-    ctxt    = context;
 }
 
 TabLabel::~TabLabel()
@@ -40,13 +46,18 @@ void TabLabel::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         /*-----------------------------------------------------*\
-        | Storing the base string in label                      |
-        |   enables switching between multiple languages        |
-        | The context needs to be stored as the translation     |
-        |   file requires the originating context               |
+        | Preserve the source string and translation context to |
+        |   allow language switching without dangling pointers. |
         \*-----------------------------------------------------*/
-        QApplication* app       = static_cast<QApplication *>(QApplication::instance());
+        if(translationContext.isEmpty())
+        {
+            ui->name->setText(baseText);
+            return;
+        }
 
-        ui->name->setText(app->translate(ctxt, label));
+        const QString translated =
+            QCoreApplication::translate(translationContext.constData(), baseTextUtf8.constData());
+
+        ui->name->setText(translated.isEmpty() ? baseText : translated);
     }
 }
