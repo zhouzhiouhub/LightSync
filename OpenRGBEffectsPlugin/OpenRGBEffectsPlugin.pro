@@ -18,6 +18,7 @@ QT +=                                                                           
 
 DEFINES += OPEN_RGB_EFFECTS_PLUGIN_LIBRARY
 TEMPLATE = lib
+TARGET = OpenRGBEffectsPlugin
 
 #-----------------------------------------------------------------------------------------------#
 # Build Configuration                                                                           #
@@ -566,17 +567,19 @@ win32:INCLUDEPATH += \
     ../OpenRGB/dependencies/hidapi-win/include
 
 win32:CONFIG(debug, debug|release) {
-    win32:DESTDIR = debug
+    BIN_SUBDIR = debug
+    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR/plugins
 }
 
 win32:CONFIG(release, debug|release) {
-    win32:DESTDIR = release
+    BIN_SUBDIR = release
+    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR/plugins
 }
 
-win32:OBJECTS_DIR = _intermediate_$$DESTDIR/.obj
-win32:MOC_DIR     = _intermediate_$$DESTDIR/.moc
-win32:RCC_DIR     = _intermediate_$$DESTDIR/.qrc
-win32:UI_DIR      = _intermediate_$$DESTDIR/.ui
+win32:OBJECTS_DIR = _intermediate_$$BIN_SUBDIR/.obj
+win32:MOC_DIR     = _intermediate_$$BIN_SUBDIR/.moc
+win32:RCC_DIR     = _intermediate_$$BIN_SUBDIR/.qrc
+win32:UI_DIR      = _intermediate_$$BIN_SUBDIR/.ui
 
 win32:contains(QMAKE_TARGET.arch, x86_64) {
     LIBS +=                                                                                     \
@@ -604,14 +607,9 @@ win32:DEFINES +=                                                                
     WIN32_LEAN_AND_MEAN                                                                         \
 
 #-----------------------------------------------------------------------------------------------#
-# Windows: Copy built plugin DLL into OpenRGB/<config>/plugins for auto-loading                 #
+# Windows: Unified output - plugin DLL is built directly into ../out/<config>/plugins           #
+#            (next to OpenRGB.exe in ../out/<config>) so no extra copy is required              #
 #-----------------------------------------------------------------------------------------------#
-win32 {
-    PLUGINS_OUT = $$PWD/../OpenRGB/$$DESTDIR/plugins
-
-    QMAKE_POST_LINK += cmd /C if not exist \"$$shell_path($$PLUGINS_OUT)\" mkdir \"$$shell_path($$PLUGINS_OUT)\" $$escape_expand(\n\t)
-    QMAKE_POST_LINK += $(COPY_FILE) \"$$shell_path($$OUT_PWD/$$DESTDIR/$$TARGET.$$QMAKE_EXTENSION_SHLIB)\" \"$$shell_path($$PLUGINS_OUT)\" $$escape_expand(\n\t)
-}
 
 #-----------------------------------------------------------------------------------------------#
 # Linux-specific Configuration                                                                  #

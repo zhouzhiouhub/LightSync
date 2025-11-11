@@ -380,17 +380,19 @@ win32:RC_ICONS +=                                                               
 # Windows GitLab CI Configuration                                                               #
 #-----------------------------------------------------------------------------------------------#
 win32:CONFIG(debug, debug|release) {
-    win32:DESTDIR = debug
+    BIN_SUBDIR = debug
+    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR
 }
 
 win32:CONFIG(release, debug|release) {
-    win32:DESTDIR = release
+    BIN_SUBDIR = release
+    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR
 }
 
-win32:OBJECTS_DIR = _intermediate_$$DESTDIR/.obj
-win32:MOC_DIR     = _intermediate_$$DESTDIR/.moc
-win32:RCC_DIR     = _intermediate_$$DESTDIR/.qrc
-win32:UI_DIR      = _intermediate_$$DESTDIR/.ui
+win32:OBJECTS_DIR = _intermediate_$$BIN_SUBDIR/.obj
+win32:MOC_DIR     = _intermediate_$$BIN_SUBDIR/.moc
+win32:RCC_DIR     = _intermediate_$$BIN_SUBDIR/.qrc
+win32:UI_DIR      = _intermediate_$$BIN_SUBDIR/.ui
 
 #-----------------------------------------------------------------------------------------------#
 # Copy dependencies to output directory                                                         #
