@@ -381,18 +381,20 @@ win32:RC_ICONS +=                                                               
 #-----------------------------------------------------------------------------------------------#
 win32:CONFIG(debug, debug|release) {
     BIN_SUBDIR = debug
-    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR
+    BUILD_BASE_DIR = $$PWD/../build/LightSync
+    win32:DESTDIR = $$PWD/../out/LightSync/$$BIN_SUBDIR
 }
 
 win32:CONFIG(release, debug|release) {
     BIN_SUBDIR = release
-    win32:DESTDIR = $$PWD/../out/$$BIN_SUBDIR
+    BUILD_BASE_DIR = $$PWD/../build/LightSync
+    win32:DESTDIR = $$PWD/../out/LightSync/$$BIN_SUBDIR
 }
 
-win32:OBJECTS_DIR = _intermediate_$$BIN_SUBDIR/.obj
-win32:MOC_DIR     = _intermediate_$$BIN_SUBDIR/.moc
-win32:RCC_DIR     = _intermediate_$$BIN_SUBDIR/.qrc
-win32:UI_DIR      = _intermediate_$$BIN_SUBDIR/.ui
+win32:OBJECTS_DIR = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.obj
+win32:MOC_DIR     = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.moc
+win32:RCC_DIR     = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.qrc
+win32:UI_DIR      = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.ui
 
 #-----------------------------------------------------------------------------------------------#
 # Copy dependencies to output directory                                                         #
