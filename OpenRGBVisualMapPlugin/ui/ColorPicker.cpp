@@ -1,0 +1,43 @@
+#include "ColorPicker.h"
+#include "ui_ColorPicker.h"
+
+#include <QString>
+#include <QFile>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QColorDialog>
+
+ColorPicker::ColorPicker(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::ColorPicker)
+{
+    ui->setupUi(this);
+    ui->button->setStyleSheet("QPushButton {background-color: #000000; border: 1px solid black;}");
+    current_color = Qt::black;
+}
+
+ColorPicker::~ColorPicker()
+{
+    delete ui;
+}
+
+void ColorPicker::SetColor(const QColor &color)
+{
+    current_color = color;
+    ui->button->setStyleSheet("QPushButton {background-color: "+ color.name() + "; border: 1px solid black;}");
+}
+
+void ColorPicker::on_button_clicked()
+{
+    QColorDialog *colorDialog = new QColorDialog(this);
+    colorDialog->setAttribute(Qt::WA_DeleteOnClose);
+    colorDialog->setCurrentColor(current_color);
+
+    connect(colorDialog, &QColorDialog::colorSelected,[=](const QColor &color){
+       SetColor(color);
+
+       emit ColorSelected(color);
+    });
+
+    colorDialog->exec();
+}
