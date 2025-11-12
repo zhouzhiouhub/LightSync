@@ -79,7 +79,7 @@ void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
             group_frame->setLayout(new QVBoxLayout(group_frame));
             group_frame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
-            QLabel* group_name_label = new QLabel(QString::fromStdString(controller->name));
+            QLabel* group_name_label = new QLabel(QString::fromUtf8(controller->name.c_str()));
             group_name_label->setWordWrap(true);
             group_name_label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 

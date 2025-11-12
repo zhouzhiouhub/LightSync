@@ -1,0 +1,28 @@
+[1mdiff --git a/OpenRGBVisualMapPlugin/ui/DeviceWidget.cpp b/OpenRGBVisualMapPlugin/ui/DeviceWidget.cpp[m
+[1mindex c960c51..ec885aa 100644[m
+[1m--- a/OpenRGBVisualMapPlugin/ui/DeviceWidget.cpp[m
+[1m+++ b/OpenRGBVisualMapPlugin/ui/DeviceWidget.cpp[m
+[36m@@ -59,9 +59,12 @@[m [mvoid DeviceWidget::on_select_toggled(bool state)[m
+ [m
+ void DeviceWidget::updateName()[m
+ {    [m
+[32m+[m[32m    const QString zoneName = QString::fromUtf8(controller_zone->zone_display_name().c_str());[m
+[32m+[m[32m    const QString controllerName = QString::fromUtf8(controller_zone->controller_display_name().c_str());[m
+[32m+[m
+     ui->name->setText([m
+[31m-                in_group?"• " + QString::fromStdString(controller_zone->zone_display_name()) :[m
+[31m-                QString::fromStdString(controller_zone->controller_display_name()));[m
+[32m+[m[32m                in_group ? QString::fromUtf8(u8"• ") + zoneName :[m
+[32m+[m[32m                controllerName);[m
+ }[m
+ [m
+ ControllerZone* DeviceWidget::getControllerZone()[m
+[36m@@ -77,7 +80,7 @@[m [mvoid DeviceWidget::on_rename_clicked()[m
+ [m
+     if(!new_name.isEmpty())[m
+     {[m
+[31m-        controller_zone->custom_zone_name = new_name.toStdString();[m
+[32m+[m[32m        controller_zone->custom_zone_name = new_name.toUtf8().toStdString();[m
+         updateName();[m
+         emit Renamed(new_name);[m
+     }[m

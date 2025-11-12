@@ -26,7 +26,7 @@ DeviceListItem::DeviceListItem(std::vector<ControllerZone*> controller_zones, bo
 
     ui->danger_not_direct->setVisible(!direct);
 
-    QString display_name = QString::fromStdString(controller->GetName());
+    const QString display_name = QString::fromUtf8(controller->GetName().c_str());
 
     ui->device_name->setToolTip(display_name);
     ui->device_name->setText(display_name);

@@ -59,9 +59,13 @@ void DeviceWidget::on_select_toggled(bool state)
 
 void DeviceWidget::updateName()
 {    
+    const QString zoneName = QString::fromUtf8(controller_zone->zone_display_name().c_str());
+    const QString controllerName = QString::fromUtf8(controller_zone->controller_display_name().c_str());
+    const QString prefix = QStringLiteral(" ");
+
     ui->name->setText(
-                in_group?"• " + QString::fromStdString(controller_zone->zone_display_name()) :
-                QString::fromStdString(controller_zone->controller_display_name()));
+                in_group ? zoneName :
+                controllerName);
 }
 
 ControllerZone* DeviceWidget::getControllerZone()
@@ -77,7 +81,7 @@ void DeviceWidget::on_rename_clicked()
 
     if(!new_name.isEmpty())
     {
-        controller_zone->custom_zone_name = new_name.toStdString();
+        controller_zone->custom_zone_name = new_name.toUtf8().toStdString();
         updateName();
         emit Renamed(new_name);
     }

@@ -11,7 +11,8 @@ ZoneListItem::ZoneListItem(ControllerZone* controller_zone) :
 
     ui->setupUi(this);
     ui->brightness->setVisible(false);
-    ui->zone_name->setText(QString::fromStdString("• " + name));
+    const QString displayName = QString::fromUtf8(name.c_str());
+    ui->zone_name->setText(displayName);
 
     ui->enable->setFont(OpenRGBPluginsFont::GetFont());
     ui->reverse->setFont(OpenRGBPluginsFont::GetFont());
