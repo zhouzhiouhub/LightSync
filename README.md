@@ -2,7 +2,7 @@
 
 ## 简介
 
-LightSync 是 OpenRGB 和 OpenRGBEffectsPlugin 的统一构建版本，将两个项目合并到一个输出目录中，简化部署和使用。
+LightSync 是 OpenRGB、OpenRGBEffectsPlugin 与 OpenRGBVisualMapPlugin 的统一构建版本，将三者合并到一个输出目录中，简化部署和使用。
 
 ## 快速开始
 
@@ -40,6 +40,7 @@ OpenRGB.exe
 LightSync/
 ├── OpenRGB/                 # OpenRGB 主程序源码
 ├── OpenRGBEffectsPlugin/    # 特效插件源码
+├── OpenRGBVisualMapPlugin/  # 可视化映射插件源码
 ├── out/                     # 构建输出目录
 │   └── LightSync/           # 统一输出文件夹 ⭐
 │       ├── debug/           # Debug 版本 🐛
@@ -47,13 +48,15 @@ LightSync/
 │       │   ├── *.dll
 │       │   ├── *.qm         # 翻译文件
 │       │   └── plugins/
-│       │       └── OpenRGBEffectsPlugin.dll
+│       │       ├── OpenRGBEffectsPlugin.dll
+│       │       └── OpenRGBVisualMapPlugin.dll
 │       └── release/         # Release 版本 🚀
 │           ├── OpenRGB.exe
 │           ├── *.dll
 │           ├── *.qm
 │           └── plugins/
-│               └── OpenRGBEffectsPlugin.dll
+│               ├── OpenRGBEffectsPlugin.dll
+│               └── OpenRGBVisualMapPlugin.dll
 ├── docs/                    # 文档
 │   ├── Build-Output-Changes.md  # 构建配置说明
 │   └── Unified-Build.md         # 统一构建指南
@@ -73,7 +76,7 @@ LightSync/
 相比原始 OpenRGB 项目，主要变更：
 
 1. **输出目录统一** - Debug 和 Release 分别输出到 `LightSync/debug/` 和 `LightSync/release/`
-2. **插件集成** - OpenRGBEffectsPlugin 自动构建到对应版本的 `plugins/` 子文件夹
+2. **插件集成** - OpenRGBEffectsPlugin 与 OpenRGBVisualMapPlugin 自动构建到对应版本的 `plugins/` 子文件夹
 3. **依赖管理** - 所有 DLL 依赖自动复制到输出目录
 4. **版本隔离** - Debug 和 Release 版本互不干扰
 
@@ -104,6 +107,7 @@ LightSync/
 
 - OpenRGB: GPLv2
 - OpenRGBEffectsPlugin: GPLv2
+- OpenRGBVisualMapPlugin: GPLv2
 
 ## 贡献
 
@@ -113,4 +117,5 @@ LightSync/
 
 - [OpenRGB 官方仓库](https://gitlab.com/CalcProgrammer1/OpenRGB)
 - [OpenRGBEffectsPlugin 官方仓库](https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin)
+- [OpenRGBVisualMapPlugin 官方仓库](https://gitlab.com/OpenRGBDevelopers/openrgbvisualmapplugin)
 

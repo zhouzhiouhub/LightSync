@@ -7,9 +7,11 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     OpenRGB \
-    OpenRGBEffectsPlugin
+    OpenRGBEffectsPlugin \
+    OpenRGBVisualMapPlugin
 
 # Ensure OpenRGB builds before plugin so headers/libs are available
 OpenRGBEffectsPlugin.depends = OpenRGB
+OpenRGBVisualMapPlugin.depends = OpenRGB
 
 

@@ -10,8 +10,10 @@ QT +=                                                                           
     gui                                                                                         \
     widgets
 
-DEFINES += ORGBVISUALMAPPLUGIN_LIBRARY
+DEFINES += ORGBVISUALMAPPLUGIN_LIBRARY \
+    OPEN_RGB_VISUALMAP_PLUGIN_LIBRARY
 TEMPLATE = lib
+TARGET = OpenRGBVisualMapPlugin
 
 #-----------------------------------------------------------------------------------------------#
 # Build Configuration                                                                           #
@@ -28,9 +30,7 @@ MINOR       = 9
 SUFFIX      = git
 
 SHORTHASH   = $$system("git rev-parse --short=7 HEAD")
-LASTTAG     = "release_"$$MAJOR"."$$MINOR
-COMMAND     = "git rev-list --count "$$LASTTAG"..HEAD"
-COMMITS     = $$system($$COMMAND)
+COMMITS     = $$system("git rev-list --count HEAD")
 
 VERSION_NUM = $$MAJOR"."$$MINOR"."$$COMMITS
 VERSION_STR = $$MAJOR"."$$MINOR
@@ -66,9 +66,9 @@ message("VERSION_RPM: "$$VERSION_RPM)
 #-----------------------------------------------------------------------------------------------#
 win32:BUILDDATE = $$system(date /t)
 unix:BUILDDATE  = $$system(date -R -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}")
-GIT_COMMIT_ID   = $$system(git --git-dir $$_PRO_FILE_PWD_/.git --work-tree $$_PRO_FILE_PWD_ rev-parse HEAD)
-GIT_COMMIT_DATE = $$system(git --git-dir $$_PRO_FILE_PWD_/.git --work-tree $$_PRO_FILE_PWD_ show -s --format=%ci HEAD)
-GIT_BRANCH      = $$system(git --git-dir $$_PRO_FILE_PWD_/.git --work-tree $$_PRO_FILE_PWD_ rev-parse --abbrev-ref HEAD)
+GIT_COMMIT_ID   = $$system(git log -n 1 --pretty=format:"%H")
+GIT_COMMIT_DATE = $$system(git log -n 1 --pretty=format:"%ci")
+GIT_BRANCH      = $$system(git branch --show-current)
 
 #-----------------------------------------------------------------------------------------------#
 # Download links                                                                                #
@@ -91,27 +91,29 @@ DEFINES +=                                                                      
 # OpenRGB Plugin SDK                                                                            #
 #-----------------------------------------------------------------------------------------------#
 INCLUDEPATH +=                                                                                  \
-    OpenRGB/                                                                                    \
-    OpenRGB/i2c_smbus                                                                           \
-    OpenRGB/RGBController                                                                       \
-    OpenRGB/net_port                                                                            \
-    OpenRGB/dependencies/json                                                                   \
-    OpenRGB/qt                                                                                  \
+    ../OpenRGB                                                                                  \
+    ../OpenRGB/i2c_smbus                                                                        \
+    ../OpenRGB/RGBController                                                                    \
+    ../OpenRGB/net_port                                                                         \
+    ../OpenRGB/dependencies/json                                                                \
+    ../OpenRGB/qt                                                                               \
+    ../OpenRGB/SPDAccessor                                                                      \
+    ../OpenRGB/hidapi_wrapper                                                                  \
 
 HEADERS +=                                                                                      \
-    OpenRGB/Colors.h                                                                            \
-    OpenRGB/OpenRGBPluginInterface.h                                                            \
-    OpenRGB/ResourceManagerInterface.h                                                          \
+    ../OpenRGB/Colors.h                                                                         \
+    ../OpenRGB/OpenRGBPluginInterface.h                                                         \
+    ../OpenRGB/ResourceManagerInterface.h                                                       \
 
 SOURCES +=                                                                                      \
-    OpenRGB/RGBController/RGBController.cpp                                                     \
-    OpenRGB/RGBController/RGBController_Network.cpp                                             \
-    OpenRGB/NetworkServer.cpp                                                                   \
-    OpenRGB/NetworkClient.cpp                                                                   \
-    OpenRGB/NetworkProtocol.cpp                                                                 \
-    OpenRGB/LogManager.cpp                                                                      \
-    OpenRGB/net_port/net_port.cpp                                                               \
-    OpenRGB/qt/hsv.cpp
+    ../OpenRGB/RGBController/RGBController.cpp                                                  \
+    ../OpenRGB/RGBController/RGBController_Network.cpp                                          \
+    ../OpenRGB/NetworkServer.cpp                                                                \
+    ../OpenRGB/NetworkClient.cpp                                                                \
+    ../OpenRGB/NetworkProtocol.cpp                                                              \
+    ../OpenRGB/LogManager.cpp                                                                   \
+    ../OpenRGB/net_port/net_port.cpp                                                            \
+    ../OpenRGB/qt/hsv.cpp
 
 #-------------------------------------------------------------------#
 # Includes                                                          #
@@ -195,19 +197,24 @@ FORMS +=                                                                        
 # Windows-specific Configuration                                                                #
 #-----------------------------------------------------------------------------------------------#
 win32:CONFIG += QTPLUGIN c++17
+win32:BUILD_BASE_DIR = $$PWD/../build/LightSync
 
 win32:CONFIG(debug, debug|release) {
-    win32:DESTDIR = debug
+    BIN_SUBDIR = debug
+    win32:DESTDIR = $$PWD/../out/LightSync/$$BIN_SUBDIR/plugins
 }
 
 win32:CONFIG(release, debug|release) {
-    win32:DESTDIR = release
+    BIN_SUBDIR = release
+    win32:DESTDIR = $$PWD/../out/LightSync/$$BIN_SUBDIR/plugins
 }
 
-win32:OBJECTS_DIR = _intermediate_$$DESTDIR/.obj
-win32:MOC_DIR     = _intermediate_$$DESTDIR/.moc
-win32:RCC_DIR     = _intermediate_$$DESTDIR/.qrc
-win32:UI_DIR      = _intermediate_$$DESTDIR/.ui
+win32:OBJECTS_DIR = $$BUILD_BASE_DIR/visualmap/_intermediate_$$BIN_SUBDIR/.obj
+win32:MOC_DIR     = $$BUILD_BASE_DIR/visualmap/_intermediate_$$BIN_SUBDIR/.moc
+win32:RCC_DIR     = $$BUILD_BASE_DIR/visualmap/_intermediate_$$BIN_SUBDIR/.qrc
+win32:UI_DIR      = $$BUILD_BASE_DIR/visualmap/_intermediate_$$BIN_SUBDIR/.ui
+win32:INCLUDEPATH +=                                                                          \
+    ../OpenRGB/dependencies/hidapi-win/include
 
 win32:contains(QMAKE_TARGET.arch, x86_64) {
     LIBS +=                                                                                     \
