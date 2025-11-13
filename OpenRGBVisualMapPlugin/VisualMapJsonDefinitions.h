@@ -2,7 +2,7 @@
 #define VISUALMAPJSONDEFINITIONS_H
 
 #include <nlohmann/json.hpp>
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 #include "RGBController.h"
 #include "GridSettings.h"
 
@@ -101,7 +101,7 @@ void from_json(const json& j, ControllerZoneSettings& s) {
     }
 }
 
-void to_json(json& j, const ControllerZone* ctrl_zone) {
+void to_json(json& j, const VisualMapControllerZone* ctrl_zone) {
     j = json{
     {"controller", ctrl_zone->controller},
     {"zone_idx", ctrl_zone->zone_idx},
@@ -161,7 +161,7 @@ public:
     void UpdateSingleLED(int)  override {};
 };
 
-void from_json(const json& j, ControllerZone* z) {
+void from_json(const json& j, VisualMapControllerZone* z) {
 
     z->controller = new DummyController();
 

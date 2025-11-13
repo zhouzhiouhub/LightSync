@@ -27,14 +27,14 @@ void ColorsPicker::changeEvent(QEvent *event)
     }
 }
 
-ColorPicker* ColorsPicker::CreatePicker(int i)
+EffectsColorPicker* ColorsPicker::CreatePicker(int i)
 {
-    ColorPicker* picker = new ColorPicker();
+    EffectsColorPicker* picker = new EffectsColorPicker();
     picker->SetRGBColor(colors[i]);
 
     color_pickers[i] = picker;
 
-    connect(picker, &ColorPicker::ColorSelected, [=](QColor c){
+    connect(picker, &EffectsColorPicker::ColorSelected, [=](QColor c){
         colors[i] = ColorUtils::fromQColor(c);
         emit ColorsChanged();
     });
@@ -57,7 +57,7 @@ void ColorsPicker::ResetColors()
 
     for(unsigned int i = 0; i < colors_count; i++)
     {
-        ColorPicker* picker = CreatePicker(i);
+        EffectsColorPicker* picker = CreatePicker(i);
         ui->colors->layout()->addWidget(picker);
     }
 

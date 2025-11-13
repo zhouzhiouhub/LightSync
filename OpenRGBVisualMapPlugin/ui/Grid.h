@@ -21,20 +21,20 @@ public:
 
     void Init();
 
-    void ResetItems(std::vector<ControllerZone*>);
+    void ResetItems(std::vector<VisualMapControllerZone*>);
     void UpdateItems();
     void ClearSelection();
     void ApplySettings(GridSettings* settings);
 
-    void SetSelection(std::vector<ControllerZone*>);
-    std::vector<ControllerZone*> GetSelection();
+    void SetSelection(std::vector<VisualMapControllerZone*>);
+    std::vector<VisualMapControllerZone*> GetSelection();
     std::vector<ControllerZoneItem*> GetSelectedItems();
     void Clear();
     void MoveSelection(int, int);
     void UpdatePreview(QImage image);
 
 signals:
-    void SelectionChanged(std::vector<ControllerZone*>);
+    void SelectionChanged(std::vector<VisualMapControllerZone*>);
     void Changed();
 
 protected:

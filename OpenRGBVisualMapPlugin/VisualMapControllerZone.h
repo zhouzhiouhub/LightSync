@@ -1,5 +1,5 @@
-#ifndef CONTROLLERZONE_H
-#define CONTROLLERZONE_H
+#ifndef VISUALMAP_CONTROLLERZONE_H
+#define VISUALMAP_CONTROLLERZONE_H
 
 #include "RGBController.h"
 #include <vector>
@@ -162,7 +162,7 @@ struct ControllerZoneSettings
     }
 };
 
-struct ControllerZone
+struct VisualMapControllerZone
 {
     RGBController* controller;
     unsigned int zone_idx;
@@ -181,11 +181,11 @@ struct ControllerZone
                 this->controller->location == other->location ;
     }
 
-    bool compare(ControllerZone* rhs) const {
+    bool compare(VisualMapControllerZone* rhs) const {
         return this->compare_controller(rhs->controller) && this->zone_idx == rhs->zone_idx;
     }
 
-    bool operator==(ControllerZone* rhs) const {
+    bool operator==(VisualMapControllerZone* rhs) const {
         return this->compare(rhs);
     }
 
@@ -241,4 +241,4 @@ struct ControllerZone
     }
 };
 
-#endif // CONTROLLERZONE_H
+#endif // VISUALMAP_CONTROLLERZONE_H

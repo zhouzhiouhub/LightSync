@@ -6,10 +6,10 @@
 #include <QKeyEvent>
 #include <QPoint>
 
-#include "Scene.h"
-#include "GridSettings.h"
+#include "../Scene.h"
+#include "../GridSettings.h"
 #include "LedItem.h"
-#include "ControllerZone.h"
+#include "../../VisualMapControllerZone.h"
 
 class EditorGrid : public QGraphicsView
 {

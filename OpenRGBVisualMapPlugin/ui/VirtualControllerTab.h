@@ -43,15 +43,15 @@ private slots:
     void on_gridOptions_SettingsChanged();
     void on_gridOptions_AutoResizeRequest();
 
-    void on_itemOptions_ShapeEditRequest(ControllerZone*);
+    void on_itemOptions_ShapeEditRequest(VisualMapControllerZone*);
     void on_itemOptions_ItemOptionsChanged();
 
     void on_grid_Changed();
-    void on_grid_SelectionChanged(std::vector<ControllerZone*>);
+    void on_grid_SelectionChanged(std::vector<VisualMapControllerZone*>);
 
-    void on_device_list_DeviceAdded(ControllerZone*);
-    void on_device_list_DeviceRemoved(ControllerZone*);
-    void on_device_list_SelectionChanged(std::vector<ControllerZone*>);
+    void on_device_list_DeviceAdded(VisualMapControllerZone*);
+    void on_device_list_DeviceRemoved(VisualMapControllerZone*);
+    void on_device_list_SelectionChanged(std::vector<VisualMapControllerZone*>);
 
     void VirtualControllerPostUpdateSlot(const QImage&);
 
@@ -71,15 +71,15 @@ private:
     void InitZoneList();
     void UpdateVirtualControllerDetails();
     void ReassignZones();
-    void UpdateItemOptions(std::vector<ControllerZone*>);
+    void UpdateItemOptions(std::vector<VisualMapControllerZone*>);
 
     Ui::VirtualControllerTab*   ui;
     VirtualController* virtual_controller;
     GridSettings* settings;
-    ControllerZone* selected_ctrl_zone = nullptr;
+    VisualMapControllerZone* selected_ctrl_zone = nullptr;
     QAction* register_controller;
     QAction* add_background;
-    std::vector<ControllerZone*> retained_zones;
+    std::vector<VisualMapControllerZone*> retained_zones;
     json saved_zones;
 
 protected:

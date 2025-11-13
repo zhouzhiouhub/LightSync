@@ -13,7 +13,7 @@
 #include <QTransform>
 #include <QRect>
 
-int WidgetEditor::Show(ControllerZone* ctrl_zone, std::vector<ControllerZone*> other_zones)
+int WidgetEditor::Show(VisualMapControllerZone* ctrl_zone, std::vector<VisualMapControllerZone*> other_zones)
 {
     WidgetEditor* editor = new WidgetEditor(nullptr, ctrl_zone);
     editor->other_zones = other_zones;
@@ -44,7 +44,7 @@ int WidgetEditor::Show(ControllerZone* ctrl_zone, std::vector<ControllerZone*> o
     return dialog->exec();
 }
 
-WidgetEditor::WidgetEditor(QWidget *parent, ControllerZone* ctrl_zone):
+WidgetEditor::WidgetEditor(QWidget *parent, VisualMapControllerZone* ctrl_zone):
     QWidget(parent),
     ui(new Ui::WidgetEditor),
     ctrl_zone(ctrl_zone)
@@ -221,12 +221,12 @@ void WidgetEditor::on_copy_shape_button_clicked()
 {
     QStringList items;
 
-    std::map<QString, ControllerZone*> ctrl_zones_choices;
+    std::map<QString, VisualMapControllerZone*> ctrl_zones_choices;
 
     // generate choice list
     int i = 0;
 
-    for(ControllerZone* ctrl_zone_it : other_zones)
+    for(VisualMapControllerZone* ctrl_zone_it : other_zones)
     {
         // ignore current ctrl_zone
         if(ctrl_zone == ctrl_zone_it)
@@ -276,7 +276,7 @@ void WidgetEditor::on_copy_shape_button_clicked()
 
         QString selected = inp->textValue();
 
-        ControllerZone* selected_ctrl_zone = ctrl_zones_choices[selected];
+        VisualMapControllerZone* selected_ctrl_zone = ctrl_zones_choices[selected];
 
         temp_shape = selected_ctrl_zone->settings.custom_shape->clone();
 

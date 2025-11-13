@@ -182,12 +182,12 @@ void OpenRGBEffectPage::InitUi()
             RGBColor UserColor = colors[i];
             UserColors.push_back(UserColor);
 
-            ColorPicker* color_picker = new ColorPicker();
+            EffectsColorPicker* color_picker = new EffectsColorPicker();
             color_picker->SetRGBColor(colors[i]);
 
             ColorPickers.push_back(color_picker);
 
-            connect(color_picker, &ColorPicker::ColorSelected, [=](QColor color){
+            connect(color_picker, &EffectsColorPicker::ColorSelected, [=](QColor color){
                 UserColors[i] = ColorUtils::fromQColor(color);
                 effect->SetUserColors(UserColors);
             });

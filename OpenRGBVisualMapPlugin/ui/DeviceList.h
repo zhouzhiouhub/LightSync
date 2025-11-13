@@ -2,7 +2,7 @@
 #define DEVICELIST_H
 
 #include <QWidget>
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 #include "DeviceWidget.h"
 
 namespace Ui {
@@ -18,14 +18,14 @@ public:
     ~DeviceList();
 
     void Clear();
-    void Init(std::vector<ControllerZone*>);
-    void SetSelection(std::vector<ControllerZone*>);
-    void UpdateControllerState(ControllerZone*);
+    void Init(std::vector<VisualMapControllerZone*>);
+    void SetSelection(std::vector<VisualMapControllerZone*>);
+    void UpdateControllerState(VisualMapControllerZone*);
 
 signals:
-    void DeviceAdded(ControllerZone*);
-    void DeviceRemoved(ControllerZone*);
-    void SelectionChanged(std::vector<ControllerZone*>);
+    void DeviceAdded(VisualMapControllerZone*);
+    void DeviceRemoved(VisualMapControllerZone*);
+    void SelectionChanged(std::vector<VisualMapControllerZone*>);
 
 private:
     Ui::DeviceList *ui;

@@ -31,18 +31,18 @@ void DeviceList::Clear()
     }
 }
 
-void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
+void DeviceList::Init(std::vector<VisualMapControllerZone*> controller_zones)
 {
     /*-------------------------------------------------*\
     | Group by RGBController                            |
     \*-------------------------------------------------*/
-    std::map<RGBController*,std::vector<ControllerZone*>> groups;
+    std::map<RGBController*,std::vector<VisualMapControllerZone*>> groups;
 
-    for(ControllerZone* controller_zone: controller_zones)
+    for(VisualMapControllerZone* controller_zone: controller_zones)
     {
         if (groups.find(controller_zone->controller) == groups.end())
         {
-            std::vector<ControllerZone*> zones;
+            std::vector<VisualMapControllerZone*> zones;
             groups[controller_zone->controller] = zones;
         }
 
@@ -62,7 +62,7 @@ void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
             continue;
         }
 
-        std::vector<ControllerZone*> zones = groups[controller];
+        std::vector<VisualMapControllerZone*> zones = groups[controller];
 
         QLayout* _layout;
         bool in_group = zones.size() > 1;
@@ -89,7 +89,7 @@ void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
             _layout = group_frame->layout();
         }
 
-        for(ControllerZone* controller_zone: zones)
+        for(VisualMapControllerZone* controller_zone: zones)
         {
             DeviceWidget* widget = new DeviceWidget(this, controller_zone, in_group);
 
@@ -109,7 +109,7 @@ void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
             });
 
             connect(widget, &DeviceWidget::Selected, [=](bool){
-                std::vector<ControllerZone*> selection;
+                std::vector<VisualMapControllerZone*> selection;
 
                 for(DeviceWidget* widget: device_widgets)
                 {
@@ -128,13 +128,13 @@ void DeviceList::Init(std::vector<ControllerZone*> controller_zones)
     ((QVBoxLayout*) layout())->addStretch();
 }
 
-void DeviceList::SetSelection(std::vector<ControllerZone*> controller_zones)
+void DeviceList::SetSelection(std::vector<VisualMapControllerZone*> controller_zones)
 {
     for(DeviceWidget* widget: device_widgets)
     {
         widget->setSelected(false);
 
-        for(ControllerZone* controller_zone: controller_zones)
+        for(VisualMapControllerZone* controller_zone: controller_zones)
         {
             if(widget->getControllerZone() == controller_zone)
             {
@@ -145,7 +145,7 @@ void DeviceList::SetSelection(std::vector<ControllerZone*> controller_zones)
     }
 }
 
-void DeviceList::UpdateControllerState(ControllerZone* controller_zone)
+void DeviceList::UpdateControllerState(VisualMapControllerZone* controller_zone)
 {
     for(DeviceWidget* widget: device_widgets)
     {

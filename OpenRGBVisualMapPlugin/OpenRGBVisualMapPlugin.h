@@ -17,8 +17,9 @@
 class OpenRGBVisualMapPlugin : public QObject, public OpenRGBPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID OpenRGBPluginInterface_IID)
-    Q_INTERFACES(OpenRGBPluginInterface)
+    // Q_PLUGIN_METADATA and Q_INTERFACES removed for static linking
+    // Q_PLUGIN_METADATA(IID OpenRGBPluginInterface_IID)
+    // Q_INTERFACES(OpenRGBPluginInterface)
 
 public:
     ~OpenRGBVisualMapPlugin() {};

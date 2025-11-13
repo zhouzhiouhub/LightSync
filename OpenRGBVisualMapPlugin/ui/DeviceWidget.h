@@ -2,7 +2,7 @@
 #define DEVICEWIDGET_H
 
 #include <QWidget>
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 
 namespace Ui {
 class DeviceWidget;
@@ -13,10 +13,10 @@ class DeviceWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit DeviceWidget(QWidget *parent = nullptr, ControllerZone* controller_zone = nullptr, bool in_group = false);
+    explicit DeviceWidget(QWidget *parent = nullptr, VisualMapControllerZone* controller_zone = nullptr, bool in_group = false);
     ~DeviceWidget();
 
-    ControllerZone* getControllerZone();
+    VisualMapControllerZone* getControllerZone();
     void setSelected(bool);
     bool isSelected();
 
@@ -37,7 +37,7 @@ signals:
 
 private:
     Ui::DeviceWidget *ui;
-    ControllerZone* controller_zone;
+    VisualMapControllerZone* controller_zone;
     bool in_group;
     void UpdateCheckState();
 };

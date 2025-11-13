@@ -73,8 +73,8 @@ GIT_BRANCH      = $$system(git branch --show-current)
 #-----------------------------------------------------------------------------------------------#
 # Download links                                                                                #
 #-----------------------------------------------------------------------------------------------#
-win32:LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/openrgbvisualmapplugin/-/jobs/artifacts/master/download?job=Windows 64"
-unix:!macx:LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/openrgbvisualmapplugin/-/jobs/artifacts/master/download?job=Linux 64"
+win32:VISUALMAP_LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/openrgbvisualmapplugin/-/jobs/artifacts/master/download?job=Windows 64"
+unix:!macx:VISUALMAP_LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/openrgbvisualmapplugin/-/jobs/artifacts/master/download?job=Linux 64"
 
 #-----------------------------------------------------------------------------------------------#
 # Inject vars in defines                                                                        #
@@ -85,7 +85,7 @@ DEFINES +=                                                                      
     GIT_COMMIT_ID=\\"\"\"$$GIT_COMMIT_ID\\"\"\"                                                 \
     GIT_COMMIT_DATE=\\"\"\"$$GIT_COMMIT_DATE\\"\"\"                                             \
     GIT_BRANCH=\\"\"\"$$GIT_BRANCH\\"\"\"                                                       \
-    LATEST_BUILD_URL=\\"\"\"$$LATEST_BUILD_URL\\"\"\"                                           \
+    VISUALMAP_LATEST_BUILD_URL=\\"\"\"$$VISUALMAP_LATEST_BUILD_URL\\"\"\"                       \
 
 #-----------------------------------------------------------------------------------------------#
 # OpenRGB Plugin SDK                                                                            #
@@ -129,7 +129,7 @@ HEADERS +=                                                                      
     VirtualController.h                                                                         \
     VisualMapSettingsManager.h                                                                  \
     VisualMapJsonDefinitions.h                                                                  \
-    ControllerZone.h                                                                            \
+    VisualMapControllerZone.h                                                                  \
     ui/ClickableLabel.h                                                                         \
     ui/ColorPicker.h                                                                            \
     ui/ColorStop.h                                                                              \

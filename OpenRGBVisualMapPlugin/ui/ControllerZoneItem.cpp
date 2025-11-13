@@ -5,7 +5,7 @@
 #include <QPalette>
 #include <QApplication>
 
-ControllerZoneItem::ControllerZoneItem(ControllerZone* ctrl_zone, GridSettings* settings) :
+ControllerZoneItem::ControllerZoneItem(VisualMapControllerZone* ctrl_zone, GridSettings* settings) :
     ctrl_zone(ctrl_zone),
     settings(settings)
 {
@@ -169,7 +169,7 @@ void ControllerZoneItem::Snap()
     ctrl_zone->settings.y = new_y;
 }
 
-ControllerZone* ControllerZoneItem::GetControllerZone()
+VisualMapControllerZone* ControllerZoneItem::GetControllerZone()
 {
     return ctrl_zone;
 }

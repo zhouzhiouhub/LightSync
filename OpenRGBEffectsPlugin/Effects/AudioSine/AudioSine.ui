@@ -122,7 +122,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="ColorPicker" name="background" native="true"/>
+          <widget class="EffectsColorPicker" name="background" native="true"/>
          </item>
          <item row="0" column="2">
           <widget class="QLabel" name="wave_colorLabel">
@@ -132,7 +132,7 @@
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="ColorPicker" name="wave_color" native="true"/>
+          <widget class="EffectsColorPicker" name="wave_color" native="true"/>
          </item>
         </layout>
        </widget>
@@ -205,9 +205,9 @@
    <header location="global">QTooltipedSlider.h</header>
   </customwidget>
   <customwidget>
-   <class>ColorPicker</class>
+  <class>EffectsColorPicker</class>
    <extends>QWidget</extends>
-   <header>ColorPicker.h</header>
+   <header location="global">EffectsColorPicker.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

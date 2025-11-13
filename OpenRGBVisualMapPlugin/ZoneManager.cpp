@@ -16,9 +16,9 @@ ZoneManager* ZoneManager::Get()
     return instance;
 }
 
-std::vector<ControllerZone*> ZoneManager::GetAvailableZones()
+std::vector<VisualMapControllerZone*> ZoneManager::GetAvailableZones()
 {
-    std::vector<ControllerZone*> available_zones;
+    std::vector<VisualMapControllerZone*> available_zones;
 
     std::vector<RGBController*> controllers = OpenRGBVisualMapPlugin::RMPointer->GetRGBControllers();
 
@@ -31,7 +31,7 @@ std::vector<ControllerZone*> ZoneManager::GetAvailableZones()
 
         for(unsigned int zone_idx = 0; zone_idx < controllers[i]->zones.size(); zone_idx++)
         {
-            ControllerZone* ctrl_zone = new ControllerZone();
+            VisualMapControllerZone* ctrl_zone = new VisualMapControllerZone();
 
             ctrl_zone->controller = controllers[i];
             ctrl_zone->zone_idx = zone_idx;
@@ -52,14 +52,14 @@ std::vector<ControllerZone*> ZoneManager::GetAvailableZones()
 }
 
 
-void ZoneManager::IdentifyZone(ControllerZone* ctrl_zone_to_identify)
+void ZoneManager::IdentifyZone(VisualMapControllerZone* ctrl_zone_to_identify)
 {
     // make sure we update the controller only once by using a set
     std::set<RGBController*> controllers;
 
-    std::vector<ControllerZone*> available_zones = GetAvailableZones();
+    std::vector<VisualMapControllerZone*> available_zones = GetAvailableZones();
 
-    for(ControllerZone* ctrl_zone: available_zones)
+    for(VisualMapControllerZone* ctrl_zone: available_zones)
     {
         SetControllerZoneColor(ctrl_zone, ctrl_zone->compare(ctrl_zone_to_identify) ? Qt::green : Qt::black);
         controllers.insert(ctrl_zone->controller);
@@ -71,7 +71,7 @@ void ZoneManager::IdentifyZone(ControllerZone* ctrl_zone_to_identify)
     }
 }
 
-void ZoneManager::SetControllerZoneColor(ControllerZone* ctrl_zone, QColor color)
+void ZoneManager::SetControllerZoneColor(VisualMapControllerZone* ctrl_zone, QColor color)
 {
     RGBController* controller = ctrl_zone->controller;
     zone z = controller->zones[ctrl_zone->zone_idx];
@@ -84,7 +84,7 @@ void ZoneManager::SetControllerZoneColor(ControllerZone* ctrl_zone, QColor color
     }
 }
 
-void ZoneManager::IdentifyLeds(ControllerZone* ctrl_zone, std::vector<unsigned int> led_nums)
+void ZoneManager::IdentifyLeds(VisualMapControllerZone* ctrl_zone, std::vector<unsigned int> led_nums)
 {
     RGBController* controller = ctrl_zone->controller;
     zone z = controller->zones[ctrl_zone->zone_idx];
@@ -101,7 +101,7 @@ void ZoneManager::IdentifyLeds(ControllerZone* ctrl_zone, std::vector<unsigned i
     controller->UpdateLEDs();
 }
 
-void ZoneManager::InitMatrixCustomShape(ControllerZone* ctrl_zone)
+void ZoneManager::InitMatrixCustomShape(VisualMapControllerZone* ctrl_zone)
 {
     matrix_map_type* matrix_map = ctrl_zone->controller->zones[ctrl_zone->zone_idx].matrix_map;
 

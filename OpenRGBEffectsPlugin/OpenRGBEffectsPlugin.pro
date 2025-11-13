@@ -82,8 +82,8 @@ GIT_BRANCH      = $$system(git branch --show-current)
 #-----------------------------------------------------------------------------------------------#
 # Download links                                                                                #
 #-----------------------------------------------------------------------------------------------#
-win32:LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin/-/jobs/artifacts/master/download?job=Windows 64"
-unix:!macx:LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin/-/jobs/artifacts/master/download?job=Linux 64"
+win32:EFFECTS_LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin/-/jobs/artifacts/master/download?job=Windows 64"
+unix:!macx:EFFECTS_LATEST_BUILD_URL="https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin/-/jobs/artifacts/master/download?job=Linux 64"
 
 #-----------------------------------------------------------------------------------------------#
 # Inject vars in defines                                                                        #
@@ -94,13 +94,14 @@ DEFINES +=                                                                      
     GIT_COMMIT_ID=\\"\"\"$$GIT_COMMIT_ID\\"\"\"                                                 \
     GIT_COMMIT_DATE=\\"\"\"$$GIT_COMMIT_DATE\\"\"\"                                             \
     GIT_BRANCH=\\"\"\"$$GIT_BRANCH\\"\"\"                                                       \
-    LATEST_BUILD_URL=\\"\"\"$$LATEST_BUILD_URL\\"\"\"                                           \
+    EFFECTS_LATEST_BUILD_URL=\\"\"\"$$EFFECTS_LATEST_BUILD_URL\\"\"\"                           \
     SHADERS_README=\\"\"\"https://gitlab.com/OpenRGBDevelopers/OpenRGBEffectsPlugin/-/blob/master/Effects/Shaders/README.md\\"\"\"                                               \
 
 #-----------------------------------------------------------------------------------------------#
 # OpenRGB Plugin SDK                                                                            #
 #-----------------------------------------------------------------------------------------------#
 INCLUDEPATH +=                                                                                  \
+    $$PWD                                                                                       \
     ../OpenRGB                                                                                  \
     ../OpenRGB/RGBController                                                                    \
     ../OpenRGB/dependencies/json                                                                \
@@ -274,11 +275,11 @@ HEADERS +=                                                                      
     Audio/AudioSettings.h                                                                       \
     Audio/AudioSettingsStruct.h                                                                 \
     Audio/AudioSignalProcessor.h                                                                \
-    ColorPicker.h                                                                               \
+    EffectsColorPicker.h                                                                       \
     ColorsPicker.h                                                                              \
     ColorUtils.h                                                                                \
     ControllerZone.h                                                                            \
-    DeviceList.h                                                                                \
+    EffectsDeviceList.h                                                                         \
     DeviceListItem.h                                                                            \
     EffectList.h                                                                                \
     EffectListManager.h                                                                         \
@@ -309,9 +310,9 @@ SOURCES +=                                                                      
     Audio/AudioSettingsStruct.cpp                                                               \
     Audio/AudioSignalProcessor.cpp                                                              \
     Audio/AudioManager.cpp                                                                      \
-    ColorPicker.cpp                                                                             \
+    EffectsColorPicker.cpp                                                                     \
     ColorsPicker.cpp                                                                            \
-    DeviceList.cpp                                                                              \
+    EffectsDeviceList.cpp                                                                       \
     DeviceListItem.cpp                                                                          \
     EffectList.cpp                                                                              \
     EffectListManager.cpp                                                                       \
@@ -336,9 +337,9 @@ SOURCES +=                                                                      
 
 FORMS +=                                                                                        \
     Audio/AudioSettings.ui                                                                      \
-    ColorPicker.ui                                                                              \
+    EffectsColorPicker.ui                                                                       \
     ColorsPicker.ui                                                                             \
-    DeviceList.ui                                                                               \
+    EffectsDeviceList.ui                                                                        \
     DeviceListItem.ui                                                                           \
     EffectList.ui                                                                               \
     EffectSearch.ui                                                                             \

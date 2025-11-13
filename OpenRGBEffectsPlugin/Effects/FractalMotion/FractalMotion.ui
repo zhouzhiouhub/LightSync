@@ -165,7 +165,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="ColorPicker" name="background" native="true"/>
+    <widget class="EffectsColorPicker" name="background" native="true"/>
    </item>
    <item row="8" column="2">
     <widget class="QLabel" name="label_freq_m6">
@@ -337,9 +337,9 @@
    <header location="global">QTooltipedSlider.h</header>
   </customwidget>
   <customwidget>
-   <class>ColorPicker</class>
+  <class>EffectsColorPicker</class>
    <extends>QWidget</extends>
-   <header>ColorPicker.h</header>
+   <header location="global">EffectsColorPicker.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

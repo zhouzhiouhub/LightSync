@@ -3,6 +3,7 @@
 
 #include <QTranslator>
 
+#include "EffectsDeviceList.h"
 #include "ui_OpenRGBEffectTab.h"
 #include "RGBEffect.h"
 #include "EffectList.h"

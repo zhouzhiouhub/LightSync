@@ -48,14 +48,14 @@ void Grid::Clear()
     ctrl_zone_items.clear();
 }
 
-void Grid::ResetItems(std::vector<ControllerZone*> ctrl_zones)
+void Grid::ResetItems(std::vector<VisualMapControllerZone*> ctrl_zones)
 {
     Clear();
 
     preview = scene->addPixmap(preview_pixmap);
     UpdatePreview(QImage(0, 0, QImage::Format_RGB32));
 
-    for(ControllerZone* ctrl_zone: ctrl_zones)
+    for(VisualMapControllerZone* ctrl_zone: ctrl_zones)
     {
         ControllerZoneItem* ctrl_zone_item = new ControllerZoneItem(ctrl_zone, settings);
         ctrl_zone_items.push_back(ctrl_zone_item);
@@ -95,7 +95,7 @@ void Grid::ResetItems(std::vector<ControllerZone*> ctrl_zones)
     }
 }
 
-void Grid::SetSelection(std::vector<ControllerZone*> ctrl_zones)
+void Grid::SetSelection(std::vector<VisualMapControllerZone*> ctrl_zones)
 {
     for(ControllerZoneItem* item: ctrl_zone_items)
     {
@@ -237,9 +237,9 @@ void Grid::MoveSelection(int delta_x, int delta_y)
     UpdateItems();
 }
 
-std::vector<ControllerZone*> Grid::GetSelection()
+std::vector<VisualMapControllerZone*> Grid::GetSelection()
 {
-    std::vector<ControllerZone*> selection;
+    std::vector<VisualMapControllerZone*> selection;
 
     for(ControllerZoneItem* ctrl_zone_item: ctrl_zone_items)
     {

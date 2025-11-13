@@ -3,7 +3,7 @@
 #include <QInputDialog>
 #include "OpenRGBPluginsFont.h"
 
-DeviceWidget::DeviceWidget(QWidget *parent, ControllerZone* controller_zone, bool in_group) :
+DeviceWidget::DeviceWidget(QWidget *parent, VisualMapControllerZone* controller_zone, bool in_group) :
     QWidget(parent),
     ui(new Ui::DeviceWidget),
     controller_zone(controller_zone),
@@ -68,7 +68,7 @@ void DeviceWidget::updateName()
                 controllerName);
 }
 
-ControllerZone* DeviceWidget::getControllerZone()
+VisualMapControllerZone* DeviceWidget::getControllerZone()
 {
     return controller_zone;
 }

@@ -491,11 +491,22 @@ OpenRGBDialog::OpenRGBDialog(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     AddSupportedDevicesPage();
 
     /*-----------------------------------------------------*\
-    | Initialize the plugin manager                         |
+    | Initialize the plugin manager for dynamic plugins     |
+    | (loads from user config directory/plugins folder)     |
     \*-----------------------------------------------------*/
     plugin_manager = new PluginManager();
     plugin_manager->RegisterAddPluginCallback(&CreatePluginCallback, this);
     plugin_manager->RegisterRemovePluginCallback(&DeletePluginCallback, this);
+    // Note: ScanAndLoadPlugins() will be called after device detection (see onDetectionEnded)
+
+    /*-----------------------------------------------------*\
+    | Initialize static plugins (built-in)                  |
+    | OpenRGBEffectsPlugin and OpenRGBVisualMapPlugin are   |
+    | statically linked and loaded immediately              |
+    \*-----------------------------------------------------*/
+    static_plugin_manager = new StaticPluginManager();
+    static_plugin_manager->RegisterAddPluginCallback(&CreatePluginCallback, this);
+    static_plugin_manager->LoadStaticPlugins();
 
     /*-----------------------------------------------------*\
     | Add the Plugins page                                  |
@@ -551,6 +562,15 @@ OpenRGBDialog::OpenRGBDialog(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
 OpenRGBDialog::~OpenRGBDialog()
 {
+    /*-----------------------------------------------------*\
+    | Unload and delete static plugins                      |
+    \*-----------------------------------------------------*/
+    if(static_plugin_manager)
+    {
+        delete static_plugin_manager;
+        static_plugin_manager = nullptr;
+    }
+
     delete ui;
 }
 
@@ -1248,6 +1268,10 @@ void OpenRGBDialog::OnSuspend()
 {
     if(SelectConfigProfile("suspend_profile"))
     {
+        /*-------------------------------------------------*\
+        | Unload only dynamic plugins on suspend            |
+        | Static plugins remain loaded                      |
+        \*-------------------------------------------------*/
         plugin_manager->UnloadPlugins();
         on_ButtonLoadProfile_clicked();
     }
@@ -1259,6 +1283,10 @@ void OpenRGBDialog::OnResume()
     {
         on_ButtonLoadProfile_clicked();
     }
+    /*-----------------------------------------------------*\
+    | Reload dynamic plugins on resume                      |
+    | Static plugins are always loaded                      |
+    \*-----------------------------------------------------*/
     plugin_manager->LoadPlugins();
 }
 
@@ -1364,8 +1392,11 @@ void OpenRGBDialog::onDetectionEnded()
     OpenRGBZonesBulkResizer::RunChecks(this);
 
     /*-----------------------------------------------------*\
-    | Load plugins after the first detection (ONLY the      |
-    | first)                                                |
+    | Load dynamic plugins after the first detection        |
+    | (ONLY the first time)                                 |
+    |                                                       |
+    | This scans user config directory for additional       |
+    | plugin DLLs. Static plugins are already loaded.       |
     \*-----------------------------------------------------*/
     if(!plugins_loaded)
     {

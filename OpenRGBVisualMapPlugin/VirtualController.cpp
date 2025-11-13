@@ -76,7 +76,7 @@ void VirtualController::UpdateVirtualZone()
     \*-------------------------------------------------*/
     unsigned int map_leds_count = 0;
 
-    for(ControllerZone* ctrl_zone: added_zones)
+    for(VisualMapControllerZone* ctrl_zone: added_zones)
     {
         RGBController* controller = ctrl_zone->controller;
         const ControllerZoneSettings& settings = ctrl_zone->settings;
@@ -268,7 +268,7 @@ void VirtualController::Register(bool state, bool unregister_members)
             {
                 std::set<RGBController*> controllers;
 
-                for(ControllerZone* ctrl_zone: added_zones)
+                for(VisualMapControllerZone* ctrl_zone: added_zones)
                 {
                     controllers.insert(ctrl_zone->controller);
                 }
@@ -295,7 +295,7 @@ void VirtualController::Register(bool state, bool unregister_members)
             {
                 std::set<RGBController*> controllers;
 
-                for(ControllerZone* ctrl_zone: added_zones)
+                for(VisualMapControllerZone* ctrl_zone: added_zones)
                 {
                     controllers.insert(ctrl_zone->controller);
                 }
@@ -315,7 +315,7 @@ void VirtualController::ForceDirectMode()
 {
     std::set<RGBController*> controllers;
 
-    for(ControllerZone* ctrl_zone: added_zones)
+    for(VisualMapControllerZone* ctrl_zone: added_zones)
     {
         controllers.insert(ctrl_zone->controller);
     }
@@ -332,12 +332,12 @@ void VirtualController::ForceDirectMode()
     }
 }
 
-bool VirtualController::HasZone(ControllerZone* ctrl_zone)
+bool VirtualController::HasZone(VisualMapControllerZone* ctrl_zone)
 {
     return std::find(added_zones.begin(), added_zones.end(),ctrl_zone) != added_zones.end();
 }
 
-void VirtualController::Add(ControllerZone* ctrl_zone)
+void VirtualController::Add(VisualMapControllerZone* ctrl_zone)
 {
     if(!HasZone(ctrl_zone))
     {
@@ -351,7 +351,7 @@ void VirtualController::Add(ControllerZone* ctrl_zone)
     }
 }
 
-void VirtualController::Remove(ControllerZone* ctrl_zone)
+void VirtualController::Remove(VisualMapControllerZone* ctrl_zone)
 {
     if(HasZone(ctrl_zone))
     {
@@ -364,7 +364,7 @@ void VirtualController::Clear()
     added_zones.clear();
 }
 
-std::vector<ControllerZone*> VirtualController::GetZones()
+std::vector<VisualMapControllerZone*> VirtualController::GetZones()
 {
     return added_zones;
 }
@@ -378,7 +378,7 @@ unsigned int VirtualController::GetTotalLeds()
 {
     unsigned int result = 0;
 
-    for(ControllerZone* ctrl_zone : added_zones)
+    for(VisualMapControllerZone* ctrl_zone : added_zones)
     {
         result += ctrl_zone->led_count();
     }
@@ -435,7 +435,7 @@ void VirtualController::ApplyToDevice(const QImage& image)
     // make sure we update the controller only once by using a set
     std::set<RGBController*> controllers;
 
-    for(ControllerZone* ctrl_zone: added_zones)
+    for(VisualMapControllerZone* ctrl_zone: added_zones)
     {
         ApplyToZone(ctrl_zone, image);
         controllers.insert(ctrl_zone->controller);
@@ -449,7 +449,7 @@ void VirtualController::ApplyToDevice(const QImage& image)
     callback(image);
 }
 
-void VirtualController::ApplyToZone(ControllerZone* ctrl_zone, const QImage& image)
+void VirtualController::ApplyToZone(VisualMapControllerZone* ctrl_zone, const QImage& image)
 {
     RGBController* controller = ctrl_zone->controller;
     zone z = controller->zones[ctrl_zone->zone_idx];

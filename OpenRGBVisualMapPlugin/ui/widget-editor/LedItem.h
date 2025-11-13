@@ -8,8 +8,8 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 
-#include "GridSettings.h"
-#include "ControllerZone.h"
+#include "../GridSettings.h"
+#include "../../VisualMapControllerZone.h"
 
 class LedItem: public QObject, public QGraphicsItem
 {

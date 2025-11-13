@@ -6,7 +6,7 @@
 #include <QPoint>
 
 #include "hsv.h"
-#include "ControllerZone.h"
+#include "../../ControllerZone.h"
 
 class BouncingBallSimulation
 {

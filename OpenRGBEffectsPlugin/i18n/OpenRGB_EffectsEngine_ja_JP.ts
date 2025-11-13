@@ -807,7 +807,7 @@
     </message>
 </context>
 <context>
-    <name>DeviceList</name>
+    <name>EffectsDeviceList</name>
     <message>
         <source>Toggle brightness sliders</source>
         <translation>輝度スライダーの切り替え</translation>

@@ -25,6 +25,7 @@
 #include "ManualDevicesSettingsPage/ManualDevicesSettingsPage.h"
 
 #include "PluginManager.h"
+#include "StaticPluginManager.h"
 #include "SuspendResume.h"
 
 #include "i2c_smbus.h"
@@ -92,6 +93,7 @@ private:
     ManualDevicesSettingsPage *     manualDevicesPage;
 
     PluginManager *                 plugin_manager      = nullptr;
+    StaticPluginManager *           static_plugin_manager = nullptr;
 
     bool                            device_view_showing = false;
     bool                            ShowI2CTools        = false;

@@ -135,7 +135,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="ColorPicker" name="backColor" native="true"/>
+    <widget class="EffectsColorPicker" name="backColor" native="true"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="Backgroundbrightness_Label">
@@ -161,9 +161,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ColorPicker</class>
+  <class>EffectsColorPicker</class>
    <extends>QWidget</extends>
-   <header>ColorPicker.h</header>
+   <header location="global">EffectsColorPicker.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -4,7 +4,7 @@
 #define NA 0xFFFFFFFF
 
 #include "RGBController.h"
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 #include <QImage>
 #include <functional>
 
@@ -31,15 +31,15 @@ public:
     void                            UpdateSize(int,int);
     void                            SetPostUpdateCallBack(std::function<void(const QImage&)>);
     void                            Register(bool, bool);
-    bool                            HasZone(ControllerZone*);
-    void                            Add(ControllerZone*);
-    void                            Remove(ControllerZone*);
+    bool                            HasZone(VisualMapControllerZone*);
+    void                            Add(VisualMapControllerZone*);
+    void                            Remove(VisualMapControllerZone*);
     void                            Clear();
-    std::vector<ControllerZone*>    GetZones();
+    std::vector<VisualMapControllerZone*>    GetZones();
     bool                            IsEmpty();
     void                            ApplyToDevice(const QImage&);
     void                            ApplyImage(const QImage&);
-    void                            ApplyToZone(ControllerZone*, const QImage&);
+    void                            ApplyToZone(VisualMapControllerZone*, const QImage&);
     unsigned int                    GetTotalLeds();
     void                            UpdateVirtualZone();
 
@@ -49,7 +49,7 @@ private:
     bool                            registered = false;
     bool                            members_unregistered = false;
     std::function<void(QImage)>     callback;
-    std::vector<ControllerZone*>    added_zones;
+    std::vector<VisualMapControllerZone*>    added_zones;
 
     void                            ForceDirectMode();
 };

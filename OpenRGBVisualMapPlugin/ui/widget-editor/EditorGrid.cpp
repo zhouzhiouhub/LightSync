@@ -1,5 +1,5 @@
 #include "EditorGrid.h"
-#include "ControllerZone.h"
+#include "../../VisualMapControllerZone.h"
 #include "LedItem.h"
 #include "stdlib.h"
 

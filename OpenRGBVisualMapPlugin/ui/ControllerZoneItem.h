@@ -7,7 +7,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include "GridSettings.h"
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 
 #define ITEM_BORDER_WIDTH 0.2
 
@@ -17,11 +17,11 @@ class ControllerZoneItem : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem);
 
 public:
-    ControllerZoneItem(ControllerZone*, GridSettings*);
+    ControllerZoneItem(VisualMapControllerZone*, GridSettings*);
     QRectF boundingRect() const;
     void paint(QPainter*, const QStyleOptionGraphicsItem*,QWidget*);
     void Snap();
-    ControllerZone* GetControllerZone();
+    VisualMapControllerZone* GetControllerZone();
     QPoint point();
 
 signals:
@@ -29,7 +29,7 @@ signals:
     void RectSelectionRequest();
 
 private:
-    ControllerZone* ctrl_zone;
+    VisualMapControllerZone* ctrl_zone;
     GridSettings* settings;
 
     bool pressed = false;

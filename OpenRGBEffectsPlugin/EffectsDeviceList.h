@@ -1,21 +1,21 @@
-#ifndef DEVICELIST_H
-#define DEVICELIST_H
+#ifndef EFFECTSDEVICELIST_H
+#define EFFECTSDEVICELIST_H
 
 #include <QWidget>
 #include "ControllerZone.h"
 #include "DeviceListItem.h"
 
 namespace Ui {
-class DeviceList;
+class EffectsDeviceList;
 }
 
-class DeviceList : public QWidget
+class EffectsDeviceList : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DeviceList(QWidget *parent = nullptr);
-    ~DeviceList();
+    explicit EffectsDeviceList(QWidget *parent = nullptr);
+    ~EffectsDeviceList();
 
     void Clear();
     void InitControllersList();
@@ -37,10 +37,10 @@ private slots:
     void on_toggle_brightness_clicked();
 
 private:
-    Ui::DeviceList *ui;
+    Ui::EffectsDeviceList *ui;
 
     std::vector<DeviceListItem*> device_items;
     std::vector<ControllerZone*> controller_zones;
 };
 
-#endif // DEVICELIST_H
+#endif // EFFECTSDEVICELIST_H

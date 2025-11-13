@@ -22,7 +22,7 @@ ItemOptions::~ItemOptions()
     delete ui;
 }
 
-void ItemOptions::SetControllerZone(ControllerZone* ctrl_zone)
+void ItemOptions::SetControllerZone(VisualMapControllerZone* ctrl_zone)
 {
     this->ctrl_zone = ctrl_zone;
     Update();

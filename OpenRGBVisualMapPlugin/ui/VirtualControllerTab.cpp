@@ -148,7 +148,7 @@ void VirtualControllerTab::LoadJson(json j)
     virtual_controller->Clear();
 
     auto ctrl_zones = j["ctrl_zones"];
-    std::vector<ControllerZone*> all_zones = retained_zones;
+    std::vector<VisualMapControllerZone*> all_zones = retained_zones;
 
     bool has_failures = false;
 
@@ -158,9 +158,9 @@ void VirtualControllerTab::LoadJson(json j)
         auto controller = entry["controller"];
         auto settings = entry["settings"];
 
-        std::vector<ControllerZone*> candidates;
+        std::vector<VisualMapControllerZone*> candidates;
 
-        for(ControllerZone* ctrl_zone : all_zones)
+        for(VisualMapControllerZone* ctrl_zone : all_zones)
         {
             /*-------------------------------------------------*\
             | Don't compare location for HID devices,           |
@@ -186,7 +186,7 @@ void VirtualControllerTab::LoadJson(json j)
             }
         }
 
-        ControllerZone* zone = nullptr;
+        VisualMapControllerZone* zone = nullptr;
         if (candidates.size() > 1)
         {
             /*-------------------------------------------------*\
@@ -199,7 +199,7 @@ void VirtualControllerTab::LoadJson(json j)
             | It won't work 100% of the time, but it will work  |
             | in some situations                                |
             \*-------------------------------------------------*/
-            for (ControllerZone* z : candidates)
+            for (VisualMapControllerZone* z : candidates)
             {
                 if (z->controller->location == controller["location"])
                 {
@@ -310,7 +310,7 @@ void VirtualControllerTab::Clear()
     selected_ctrl_zone = nullptr;
 }
 
-void VirtualControllerTab::UpdateItemOptions(std::vector<ControllerZone*> selected_controller_zones)
+void VirtualControllerTab::UpdateItemOptions(std::vector<VisualMapControllerZone*> selected_controller_zones)
 {
     if(selected_controller_zones.size() == 1)
     {
@@ -327,7 +327,7 @@ void VirtualControllerTab::UpdateItemOptions(std::vector<ControllerZone*> select
 /*-------------------------------------------------*\
 | ui element signals                                |
 \*-------------------------------------------------*/
-void VirtualControllerTab::on_device_list_DeviceAdded(ControllerZone* controller_zone)
+void VirtualControllerTab::on_device_list_DeviceAdded(VisualMapControllerZone* controller_zone)
 {
     virtual_controller->Add(controller_zone);
     UpdateVirtualControllerDetails();
@@ -335,20 +335,20 @@ void VirtualControllerTab::on_device_list_DeviceAdded(ControllerZone* controller
 }
 
 
-void VirtualControllerTab::on_device_list_DeviceRemoved(ControllerZone* controller_zone)
+void VirtualControllerTab::on_device_list_DeviceRemoved(VisualMapControllerZone* controller_zone)
 {
     virtual_controller->Remove(controller_zone);
     UpdateVirtualControllerDetails();
     ui->grid->ResetItems(virtual_controller->GetZones());
 }
 
-void VirtualControllerTab::on_device_list_SelectionChanged(std::vector<ControllerZone*> selected_controller_zones)
+void VirtualControllerTab::on_device_list_SelectionChanged(std::vector<VisualMapControllerZone*> selected_controller_zones)
 {
     ui->grid->SetSelection(selected_controller_zones);
     UpdateItemOptions(selected_controller_zones);
 }
 
-void VirtualControllerTab::on_grid_SelectionChanged(std::vector<ControllerZone*> selected_controller_zones)
+void VirtualControllerTab::on_grid_SelectionChanged(std::vector<VisualMapControllerZone*> selected_controller_zones)
 {
     ui->device_list->SetSelection(selected_controller_zones);
     UpdateItemOptions(selected_controller_zones);
@@ -366,7 +366,7 @@ void VirtualControllerTab::on_grid_Changed()
     ui->itemOptions->Update();
 }
 
-void VirtualControllerTab::on_itemOptions_ShapeEditRequest(ControllerZone* controller_zone)
+void VirtualControllerTab::on_itemOptions_ShapeEditRequest(VisualMapControllerZone* controller_zone)
 {
     if(controller_zone)
     {
@@ -404,7 +404,7 @@ void VirtualControllerTab::on_gridOptions_AutoResizeRequest()
     int max_x = INT_MIN;
     int max_y = INT_MIN;
 
-    for (ControllerZone* controller_zone: virtual_controller->GetZones())
+    for (VisualMapControllerZone* controller_zone: virtual_controller->GetZones())
     {
         min_x = std::min<int>(min_x, controller_zone->settings.x);
         min_y = std::min<int>(min_y, controller_zone->settings.y);
@@ -416,7 +416,7 @@ void VirtualControllerTab::on_gridOptions_AutoResizeRequest()
     /*-------------------------------------------------*\
     | Shift all controllers                             |
     \*-------------------------------------------------*/
-    for (ControllerZone* controller_zone: virtual_controller->GetZones())
+    for (VisualMapControllerZone* controller_zone: virtual_controller->GetZones())
     {
         controller_zone->settings.x -= min_x;
         controller_zone->settings.y -= min_y;
@@ -451,7 +451,7 @@ void VirtualControllerTab::AddBackgroundAction()
 
 void VirtualControllerTab::ClearVmapAction()
 {
-    for(ControllerZone* ctrl_zone: virtual_controller->GetZones())
+    for(VisualMapControllerZone* ctrl_zone: virtual_controller->GetZones())
     {
         ctrl_zone->settings = ControllerZoneSettings::defaults();
     }

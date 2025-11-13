@@ -67,7 +67,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="DeviceList" name="device_list" native="true">
+       <widget class="EffectsDeviceList" name="device_list" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -95,9 +95,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>DeviceList</class>
+   <class>EffectsDeviceList</class>
    <extends>QWidget</extends>
-   <header location="global">DeviceList.h</header>
+   <header location="global">EffectsDeviceList.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

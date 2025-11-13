@@ -2,7 +2,7 @@
 #define COLORSPICKER_H
 
 #include <QWidget>
-#include "ColorPicker.h"
+#include "EffectsColorPicker.h"
 
 namespace Ui {
 class ColorsPicker;
@@ -31,9 +31,9 @@ private:
     Ui::ColorsPicker *ui;
 
     void ResetColors();
-    ColorPicker* CreatePicker(int);
+    EffectsColorPicker* CreatePicker(int);
     std::vector<RGBColor> colors;
-    std::vector<ColorPicker*> color_pickers;
+    std::vector<EffectsColorPicker*> color_pickers;
 
 };
 

@@ -1,5 +1,5 @@
-#ifndef CONTROLLERZONE_H
-#define CONTROLLERZONE_H
+#ifndef EFFECTS_CONTROLLERZONE_H
+#define EFFECTS_CONTROLLERZONE_H
 
 #include <nlohmann/json.hpp>
 #include "ColorUtils.h"
@@ -173,4 +173,4 @@ public:
     }
 };
 
-#endif // CONTROLLERZONE_H
+#endif // EFFECTS_CONTROLLERZONE_H

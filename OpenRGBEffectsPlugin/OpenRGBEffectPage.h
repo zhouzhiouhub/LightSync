@@ -4,7 +4,7 @@
 #include "ui_OpenRGBEffectPage.h"
 
 #include "RGBEffect.h"
-#include "ColorPicker.h"
+#include "EffectsColorPicker.h"
 
 namespace Ui {
 class OpenRGBEffectPage;
@@ -55,7 +55,7 @@ private:
 
     std::vector<RGBController*> OwnedController;
     std::vector<RGBColor> UserColors;
-    std::vector<ColorPicker*> ColorPickers;
+    std::vector<EffectsColorPicker*> ColorPickers;
 
     bool RandomColors = false;
 

@@ -3,24 +3,24 @@
 
 #include <QImage>
 #include <vector>
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 
 class ZoneManager
 {
 public:
     static ZoneManager* Get();
 
-    std::vector<ControllerZone*> GetAvailableZones();
+    std::vector<VisualMapControllerZone*> GetAvailableZones();
 
-    void IdentifyZone(ControllerZone*);
-    void IdentifyLeds(ControllerZone*, std::vector<unsigned int>);
+    void IdentifyZone(VisualMapControllerZone*);
+    void IdentifyLeds(VisualMapControllerZone*, std::vector<unsigned int>);
 
 private:
     ZoneManager(){};
     static ZoneManager* instance;
 
-    void SetControllerZoneColor(ControllerZone*, QColor);
-    void InitMatrixCustomShape(ControllerZone*);
+    void SetControllerZoneColor(VisualMapControllerZone*, QColor);
+    void InitMatrixCustomShape(VisualMapControllerZone*);
 };
 
 #endif // ZONEMANAGER_H

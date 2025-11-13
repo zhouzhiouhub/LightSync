@@ -181,6 +181,11 @@ HEADERS +=                                                                      
     RGBController/RGBController_Network.h                                                       \
     startup/startup.h                                                                           \
 
+#-----------------------------------------------------------------------------------------------#
+# Include Static Plugins                                                                        #
+#-----------------------------------------------------------------------------------------------#
+include(plugins_static.pri)
+
 SOURCES +=                                                                                      \
     $$GUI_CPP                                                                                   \
     $$CONTROLLER_CPP                                                                            \
@@ -391,10 +396,10 @@ win32:CONFIG(release, debug|release) {
     win32:DESTDIR = $$PWD/../out/LightSync/$$BIN_SUBDIR
 }
 
-win32:OBJECTS_DIR = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.obj
-win32:MOC_DIR     = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.moc
-win32:RCC_DIR     = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.qrc
-win32:UI_DIR      = $$BUILD_BASE_DIR/_intermediate_$$BIN_SUBDIR/.ui
+win32:OBJECTS_DIR = $$BUILD_BASE_DIR/_i_$$BIN_SUBDIR/o
+win32:MOC_DIR     = $$BUILD_BASE_DIR/_i_$$BIN_SUBDIR/m
+win32:RCC_DIR     = $$BUILD_BASE_DIR/_i_$$BIN_SUBDIR/r
+win32:UI_DIR      = $$BUILD_BASE_DIR/_i_$$BIN_SUBDIR/u
 
 #-----------------------------------------------------------------------------------------------#
 # Copy dependencies to output directory                                                         #

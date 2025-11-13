@@ -1,5 +1,5 @@
-#include "ColorPicker.h"
-#include "ui_ColorPicker.h"
+#include "EffectsColorPicker.h"
+#include "ui_EffectsColorPicker.h"
 
 #include <QString>
 #include <QFile>
@@ -8,20 +8,20 @@
 #include <QColorDialog>
 #include "ColorUtils.h"
 
-ColorPicker::ColorPicker(QWidget *parent) :
+EffectsColorPicker::EffectsColorPicker(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ColorPicker)
+    ui(new Ui::EffectsColorPicker)
 {
     ui->setupUi(this);
     ui->button->setStyleSheet("QPushButton {background-color: black; border: 1px solid black;}");
 }
 
-ColorPicker::~ColorPicker()
+EffectsColorPicker::~EffectsColorPicker()
 {
     delete ui;
 }
 
-void ColorPicker::changeEvent(QEvent *event)
+void EffectsColorPicker::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)
     {
@@ -29,18 +29,18 @@ void ColorPicker::changeEvent(QEvent *event)
     }
 }
 
-void ColorPicker::SetQColor(QColor color)
+void EffectsColorPicker::SetQColor(QColor color)
 {
     current_color = color;
     ui->button->setStyleSheet("QPushButton {background-color: "+ color.name() + "; border: 1px solid black;}");
 }
 
-void ColorPicker::SetRGBColor(RGBColor color)
+void EffectsColorPicker::SetRGBColor(RGBColor color)
 {
     SetQColor(ColorUtils::toQColor(color));
 }
 
-void ColorPicker::on_button_clicked()
+void EffectsColorPicker::on_button_clicked()
 {
     QColorDialog *colorDialog = new QColorDialog(this);
     colorDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -54,12 +54,12 @@ void ColorPicker::on_button_clicked()
     colorDialog->open();
 }
 
-QColor ColorPicker::CurrentQColor()
+QColor EffectsColorPicker::CurrentQColor()
 {
     return current_color;
 }
 
-RGBColor ColorPicker::CurrentRGBColor()
+RGBColor EffectsColorPicker::CurrentRGBColor()
 {
     return ColorUtils::fromQColor(current_color);
 }

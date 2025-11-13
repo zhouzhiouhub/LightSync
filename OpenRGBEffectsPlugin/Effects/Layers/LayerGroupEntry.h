@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <nlohmann/json.hpp>
 #include "LayerEntry.h"
-#include "ControllerZone.h"
+#include "../../ControllerZone.h"
 
 using json = nlohmann::json;
 

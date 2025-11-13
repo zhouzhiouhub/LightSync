@@ -1,21 +1,21 @@
-#ifndef COLORPICKER_H
-#define COLORPICKER_H
+#ifndef EFFECTS_COLORPICKER_H
+#define EFFECTS_COLORPICKER_H
 
 #include <QWidget>
 #include "RGBController.h"
 #include "ColorUtils.h"
 
 namespace Ui {
-class ColorPicker;
+class EffectsColorPicker;
 }
 
-class ColorPicker : public QWidget
+class EffectsColorPicker : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ColorPicker(QWidget *parent = nullptr);
-    ~ColorPicker();
+    explicit EffectsColorPicker(QWidget *parent = nullptr);
+    ~EffectsColorPicker();
 
     RGBColor CurrentRGBColor();
     QColor CurrentQColor();
@@ -31,8 +31,8 @@ signals:
     void ColorSelected(QColor);
 
 private:
-    Ui::ColorPicker *ui;
+    Ui::EffectsColorPicker *ui;
     QColor current_color;
 };
 
-#endif // COLORPICKER_H
+#endif // EFFECTS_COLORPICKER_H

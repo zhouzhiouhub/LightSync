@@ -1,5 +1,5 @@
-#include "DeviceList.h"
-#include "ui_DeviceList.h"
+#include "EffectsDeviceList.h"
+#include "ui_EffectsDeviceList.h"
 #include "OpenRGBPluginsFont.h"
 
 #include "OpenRGBEffectsPlugin.h"
@@ -7,9 +7,9 @@
 #include <QVBoxLayout>
 
 
-DeviceList::DeviceList(QWidget *parent) :
+EffectsDeviceList::EffectsDeviceList(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DeviceList)
+    ui(new Ui::EffectsDeviceList)
 {
     ui->setupUi(this);
     ui->devices->setLayout(new QVBoxLayout(ui->devices));
@@ -20,12 +20,12 @@ DeviceList::DeviceList(QWidget *parent) :
     InitControllersList();
 }
 
-DeviceList::~DeviceList()
+EffectsDeviceList::~EffectsDeviceList()
 {
     delete ui;
 }
 
-void DeviceList::changeEvent(QEvent *event)
+void EffectsDeviceList::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)
     {
@@ -33,7 +33,7 @@ void DeviceList::changeEvent(QEvent *event)
     }
 }
 
-void DeviceList::Clear()
+void EffectsDeviceList::Clear()
 {
     device_items.clear();
 
@@ -45,7 +45,7 @@ void DeviceList::Clear()
     }
 }
 
-void DeviceList::InitControllersList()
+void EffectsDeviceList::InitControllersList()
 {
     std::vector<RGBController*> controllers = OpenRGBEffectsPlugin::RMPointer->GetRGBControllers();
 
@@ -103,7 +103,7 @@ void DeviceList::InitControllersList()
     ((QVBoxLayout*) ui->devices->layout())->addStretch(10000);
 }
 
-void DeviceList::on_toggle_select_all_clicked()
+void EffectsDeviceList::on_toggle_select_all_clicked()
 {
     for(DeviceListItem* item: device_items)
     {
@@ -116,7 +116,7 @@ void DeviceList::on_toggle_select_all_clicked()
     emit SelectionChanged();
 }
 
-void DeviceList::on_toggle_reverse_clicked()
+void EffectsDeviceList::on_toggle_reverse_clicked()
 {
     for(DeviceListItem* item: device_items)
     {
@@ -126,7 +126,7 @@ void DeviceList::on_toggle_reverse_clicked()
     emit SelectionChanged();
 }
 
-void DeviceList::on_toggle_brightness_clicked()
+void EffectsDeviceList::on_toggle_brightness_clicked()
 {
     for(DeviceListItem* item: device_items)
     {
@@ -134,7 +134,7 @@ void DeviceList::on_toggle_brightness_clicked()
     }
 }
 
-void DeviceList::DisableControls()
+void EffectsDeviceList::DisableControls()
 {
     setEnabled(false);
 
@@ -144,7 +144,7 @@ void DeviceList::DisableControls()
     }
 }
 
-void DeviceList::EnableControls()
+void EffectsDeviceList::EnableControls()
 {
    setEnabled(true);
 
@@ -154,12 +154,12 @@ void DeviceList::EnableControls()
     }
 }
 
-std::vector<ControllerZone*> DeviceList::GetControllerZones()
+std::vector<ControllerZone*> EffectsDeviceList::GetControllerZones()
 {
     return controller_zones;
 }
 
-std::vector<ControllerZone*> DeviceList::GetSelection()
+std::vector<ControllerZone*> EffectsDeviceList::GetSelection()
 {
     std::vector<ControllerZone*> selection;
 
@@ -174,7 +174,7 @@ std::vector<ControllerZone*> DeviceList::GetSelection()
     return selection;
 }
 
-void DeviceList::ApplySelection(std::vector<ControllerZone*> selection)
+void EffectsDeviceList::ApplySelection(std::vector<ControllerZone*> selection)
 {
     for(DeviceListItem* item: device_items)
     {

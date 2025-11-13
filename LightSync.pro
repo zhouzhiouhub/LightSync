@@ -1,17 +1,15 @@
 #-----------------------------------------------------------------------------------------------#
 # LightSync unified qmake project                                                               #
-#   Builds OpenRGB app and Effects plugin together                                               #
+#   Builds OpenRGB app with integrated plugins (no longer separate DLLs)                        #
 #-----------------------------------------------------------------------------------------------#
 
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    OpenRGB \
-    OpenRGBEffectsPlugin \
-    OpenRGBVisualMapPlugin
+    OpenRGB
 
-# Ensure OpenRGB builds before plugin so headers/libs are available
-OpenRGBEffectsPlugin.depends = OpenRGB
-OpenRGBVisualMapPlugin.depends = OpenRGB
+# Plugins are now statically compiled into OpenRGB executable
+# OpenRGBEffectsPlugin and OpenRGBVisualMapPlugin source is included via plugins_static.pri
+
 
 

@@ -2,7 +2,7 @@
 #define ITEMOPTIONS_H
 
 #include <QWidget>
-#include "ControllerZone.h"
+#include "VisualMapControllerZone.h"
 
 namespace Ui {
 class ItemOptions;
@@ -16,16 +16,16 @@ public:
     explicit ItemOptions(QWidget *parent = nullptr);
     ~ItemOptions();
 
-    void SetControllerZone(ControllerZone*);
+    void SetControllerZone(VisualMapControllerZone*);
     void Update();
 
 signals:
     void ItemOptionsChanged() const;
-    void ShapeEditRequest(ControllerZone*);
+    void ShapeEditRequest(VisualMapControllerZone*);
 
 private:
     Ui::ItemOptions *ui;
-    ControllerZone* ctrl_zone = nullptr;
+    VisualMapControllerZone* ctrl_zone = nullptr;
 
     void UpdateWidgetsVisibility();
 

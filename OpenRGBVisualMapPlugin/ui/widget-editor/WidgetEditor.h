@@ -2,8 +2,8 @@
 #define WIDGETEDITOR_H
 
 #include <QWidget>
-#include "GridSettings.h"
-#include "ControllerZone.h"
+#include "../GridSettings.h"
+#include "../../VisualMapControllerZone.h"
 
 namespace Ui {
 class WidgetEditor;
@@ -14,7 +14,7 @@ class WidgetEditor : public QWidget
     Q_OBJECT
 
 public:
-    static int Show(ControllerZone*, std::vector<ControllerZone*>);
+    static int Show(VisualMapControllerZone*, std::vector<VisualMapControllerZone*>);
 
 signals:
     void Cancel();
@@ -47,14 +47,14 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    explicit WidgetEditor(QWidget *parent = nullptr, ControllerZone* ctrl_zone = nullptr);
+    explicit WidgetEditor(QWidget *parent = nullptr, VisualMapControllerZone* ctrl_zone = nullptr);
     ~WidgetEditor();
 
     CustomShape* temp_shape = nullptr;
 
     Ui::WidgetEditor *ui;
-    ControllerZone* ctrl_zone;
-    std::vector<ControllerZone*> other_zones;
+    VisualMapControllerZone* ctrl_zone;
+    std::vector<VisualMapControllerZone*> other_zones;
     GridSettings* settings;
 
     std::vector<CustomShape*> states;
