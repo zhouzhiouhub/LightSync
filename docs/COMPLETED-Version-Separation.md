@@ -15,8 +15,11 @@ out/LightSync/
 │   ├── OpenRGB.pdb                 # 82 MB（调试符号）
 │   ├── hidapi.dll
 │   ├── libusb-1.0.dll
-│   ├── WinRing0x64.dll
-│   ├── WinRing0x64.sys
+│   ├── PawnIOLib.dll
+│   ├── SmbusI801.bin
+│   ├── SmbusPIIX4.bin
+│   ├── SmbusNCT6793.bin
+│   ├── LpcIO.bin
 │   └── plugins/
 │       ├── OpenRGBEffectsPlugin.dll    # 5.3 MB
 │       └── OpenRGBEffectsPlugin.pdb    # 32 MB

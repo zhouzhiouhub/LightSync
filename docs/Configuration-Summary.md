@@ -35,8 +35,11 @@ out/
     ├── OpenRGB.exe                    # 主程序（15.5 MB）
     ├── hidapi.dll
     ├── libusb-1.0.dll
-    ├── WinRing0x64.dll
-    ├── WinRing0x64.sys
+    ├── PawnIOLib.dll
+    ├── SmbusI801.bin
+    ├── SmbusPIIX4.bin
+    ├── SmbusNCT6793.bin
+    ├── LpcIO.bin
     └── plugins/
         └── OpenRGBEffectsPlugin.dll   # 特效插件（5.3 MB）
 ```

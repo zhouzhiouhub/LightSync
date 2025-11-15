@@ -52,7 +52,11 @@ dir *.dll
 # 应该看到：
 # - hidapi.dll
 # - libusb-1.0.dll
-# - WinRing0x64.dll
+# - PawnIOLib.dll
+# - SmbusI801.bin
+# - SmbusPIIX4.bin
+# - SmbusNCT6793.bin
+# - LpcIO.bin
 ```
 
 **验证 DLL：**
@@ -257,7 +261,7 @@ cdb -g -G OpenRGB.exe
 | 只在调试时崩溃 | 禁用调试器异常中断 |
 | 找不到 DLL | 检查输出目录的 DLL 文件 |
 | Release 正常 Debug 崩溃 | 清理重新构建 |
-| 启动就崩溃 | 检查驱动加载（WinRing0x64.sys） |
+| 启动就崩溃 | 确认 PawnIO 组件（PawnIOLib.dll / *.bin）已复制且加载成功 |
 
 ---
 

@@ -243,7 +243,6 @@ SOURCES +=                                                                      
     net_port/net_port.cpp                                                                       \
     serial_port/serial_port.cpp                                                                 \
     StringUtils.cpp                                                                             \
-    super_io/super_io.cpp                                                                       \
     AutoStart/AutoStart.cpp                                                                     \
     KeyboardLayoutManager/KeyboardLayoutManager.cpp                                             \
     RGBController/RGBController.cpp                                                             \
@@ -254,6 +253,9 @@ SOURCES +=                                                                      
 
 RESOURCES +=                                                                                    \
     qt/resources.qrc                                                                            \
+
+!win32:SOURCES +=                                                                               \
+    super_io/super_io.cpp                                                                       \
 
 #-----------------------------------------------------------------------------------------------#
 # General configuration to decide if in-tree dependencies are used or not
@@ -308,10 +310,11 @@ win32:QMAKE_CXXFLAGS += /utf-8
 win32:INCLUDEPATH +=                                                                            \
     dependencies/display-library/include                                                        \
     dependencies/hidapi-win/include                                                             \
-    dependencies/winring0/include                                                               \
     dependencies/libusb-1.0.27/include                                                          \
     dependencies/mbedtls-3.2.1/include                                                          \
     dependencies/NVFC                                                                           \
+    dependencies/PawnIO                                                                         \
+    i2c_smbus/Windows                                                                           \
     wmi/                                                                                        \
 
 win32:SOURCES += $$CONTROLLER_CPP_WINDOWS
@@ -320,10 +323,7 @@ win32:SOURCES +=                                                                
     dependencies/hueplusplus-1.2.0/src/WinHttpHandler.cpp                                       \
     dependencies/NVFC/nvapi.cpp                                                                 \
     i2c_smbus/i2c_smbus_amdadl.cpp                                                              \
-    i2c_smbus/i2c_smbus_i801.cpp                                                                \
-    i2c_smbus/i2c_smbus_nct6775.cpp                                                             \
     i2c_smbus/i2c_smbus_nvapi.cpp                                                               \
-    i2c_smbus/i2c_smbus_piix4.cpp                                                               \
     scsiapi/scsiapi_windows.c                                                                   \
     serial_port/find_usb_serial_port_win.cpp                                                    \
     SuspendResume/SuspendResume_Windows.cpp                                                     \
@@ -337,31 +337,34 @@ win32:HEADERS +=                                                                
     dependencies/display-library/include/adl_defines.h                                          \
     dependencies/display-library/include/adl_sdk.h                                              \
     dependencies/display-library/include/adl_structures.h                                       \
-    dependencies/winring0/include/OlsApi.h                                                      \
     dependencies/NVFC/nvapi.h                                                                   \
-    i2c_smbus/i2c_smbus_i801.h                                                                  \
-    i2c_smbus/i2c_smbus_nct6775.h                                                               \
     i2c_smbus/i2c_smbus_nvapi.h                                                                 \
-    i2c_smbus/i2c_smbus_piix4.h                                                                 \
+    i2c_smbus/Windows/i2c_smbus_pawnio.h                                                        \
     wmi/wmi.h                                                                                   \
     AutoStart/AutoStart-Windows.h                                                               \
     SuspendResume/SuspendResume_Windows.h                                                       \
 
 win32:contains(QMAKE_TARGET.arch, x86_64) {
+    win32:SOURCES +=                                                                            \
+        i2c_smbus/Windows/i2c_smbus_pawnio.cpp                                                  \
+        super_io/super_io_pawnio.cpp                                                            \
+
     LIBS +=                                                                                     \
         -lws2_32                                                                                \
         -liphlpapi                                                                              \
-        -L"$$PWD/dependencies/winring0/x64/" -lWinRing0x64                                      \
         -L"$$PWD/dependencies/libusb-1.0.27/VS2019/MS64/dll" -llibusb-1.0                       \
         -L"$$PWD/dependencies/hidapi-win/x64/" -lhidapi                                         \
         -L"$$PWD/dependencies/mbedtls-3.2.1/lib/x64/" -lmbedcrypto -lmbedtls -lmbedx509         \
+        -L"$$PWD/dependencies/PawnIO/" -lPawnIOLib                                              \
 }
 
 win32:contains(QMAKE_TARGET.arch, x86) {
+    win32:SOURCES +=                                                                            \
+        super_io/super_io.cpp                                                                   \
+
     LIBS +=                                                                                     \
         -lws2_32                                                                                \
         -liphlpapi                                                                              \
-        -L"$$PWD/dependencies/winring0/Win32/" -lWinRing0                                       \
         -L"$$PWD/dependencies/libusb-1.0.27/VS2019/MS32/dll" -llibusb-1.0                       \
         -L"$$PWD/dependencies/hidapi-win/x86/" -lhidapi                                         \
         -L"$$PWD/dependencies/mbedtls-3.2.1/lib/x86/" -lmbedcrypto -lmbedtls -lmbedx509         \
@@ -380,6 +383,12 @@ win32:DEFINES +=                                                                
 
 win32:RC_ICONS +=                                                                               \
     qt/OpenRGB.ico
+
+win32:DISTFILES += \
+    dependencies/PawnIO/modules/SmbusPIIX4.bin                                                  \
+    dependencies/PawnIO/modules/SmbusI801.bin                                                   \
+    dependencies/PawnIO/modules/SmbusNCT6793.bin                                                \
+    dependencies/PawnIO/modules/LpcIO.bin
 
 #-----------------------------------------------------------------------------------------------#
 # Windows GitLab CI Configuration                                                               #
@@ -406,10 +415,13 @@ win32:UI_DIR      = $$BUILD_BASE_DIR/_i_$$BIN_SUBDIR/u
 #-----------------------------------------------------------------------------------------------#
 
 win32:contains(QMAKE_TARGET.arch, x86_64) {
-    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/winring0/x64/WinRing0x64.dll                )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
-    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/winring0/x64/WinRing0x64.sys                )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
     copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/libusb-1.0.27/VS2019/MS64/dll/libusb-1.0.dll)\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
     copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/hidapi-win/x64/hidapi.dll                   )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
+    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/PawnIO/PawnIOLib.dll                        )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
+    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/PawnIO/modules/SmbusPIIX4.bin               )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
+    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/PawnIO/modules/SmbusI801.bin                )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
+    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/PawnIO/modules/SmbusNCT6793.bin             )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
+    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/PawnIO/modules/LpcIO.bin                    )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
     first.depends = $(first) copydata
     export(first.depends)
     export(copydata.commands)
@@ -417,9 +429,6 @@ win32:contains(QMAKE_TARGET.arch, x86_64) {
 }
 
 win32:contains(QMAKE_TARGET.arch, x86) {
-    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/winring0/Win32/WinRing0.dll                 )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
-    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/winring0/Win32/WinRing0.sys                 )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
-    copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/winring0/x64/WinRing0x64.sys                )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
     copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/libusb-1.0.27/VS2019/MS32/dll/libusb-1.0.dll)\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
     copydata.commands += $(COPY_FILE) \"$$shell_path($$PWD/dependencies/hidapi-win/x86/hidapi.dll                   )\" \"$$shell_path($$DESTDIR)\" $$escape_expand(\n\t)
 
