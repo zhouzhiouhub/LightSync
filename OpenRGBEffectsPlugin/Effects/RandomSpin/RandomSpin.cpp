@@ -127,7 +127,7 @@ void RandomSpin::StepEffect(std::vector<ControllerZone*> controller_zones)
         for (int LedID = 0; LedID < leds_count; LedID++)
         {
             RGBColor color = GetColor(reverse ? leds_count - LedID - 1 : LedID, leds_count, spin_entries[i]);
-            controller_zones[i]->SetLED(LedID, color, Brightness, Temperature, Tint);
+            controller_zones[i]->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
         }
     }
 

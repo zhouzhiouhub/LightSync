@@ -66,12 +66,12 @@ void LayerGroupEntry::AddLayerEntry(LayerEntry* layer_entry)
     layer_entry->EffectState(state);
 }
 
-void LayerGroupEntry::StepEffect(std::vector<ControllerZone*> controller_zones, int Brightness, int Temperature, int Tint)
+void LayerGroupEntry::StepEffect(std::vector<ControllerZone*> controller_zones, int Brightness, int Temperature, int Tint, int Saturation)
 {
     // Reset the current zones to black
     for(ControllerZone* controller_zone: controller_zones)
     {
-        controller_zone->SetAllZoneLEDs(ColorUtils::OFF(), 0, 0 , 0);
+        controller_zone->SetAllZoneLEDs(ColorUtils::OFF(), 0, 0 , 0, Saturation);
     }
 
     // Iterate over groups
@@ -115,7 +115,7 @@ void LayerGroupEntry::StepEffect(std::vector<ControllerZone*> controller_zones, 
 
         for(unsigned int i = controller_zone->zone_start_idx(); i < controller_zone->zone_stop_idx(); i ++)
         {
-            current[i] = ColorUtils::apply_adjustments(current[i], Brightness / 100.f, Temperature, Tint);
+            current[i] = ColorUtils::apply_adjustments(current[i], Brightness / 100.f, Temperature, Tint, Saturation);
         }
     }
 }

@@ -607,6 +607,15 @@ void OpenRGBEffectTab::LoadEffect(json effect_settings)
         effect->SetTint(0);
     }
 
+    if(effect_settings.contains("Saturation"))
+    {
+        effect->SetSaturation(effect_settings["Saturation"]);
+    }
+    else
+    {
+        effect->SetSaturation(100);
+    }
+
     printf("[OpenRGBEffectsPlugin] Effect %s: Loading custom settings\n", name.c_str());
 
     if(effect_settings.contains("CustomSettings"))

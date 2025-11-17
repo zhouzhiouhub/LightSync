@@ -153,7 +153,7 @@ void AudioVUMeter::StepEffect(std::vector<ControllerZone*> controller_zones)
             for(unsigned int i = 0; i < width; i++)
             {
                 RGBColor color = GetColor(amp, reverse? width - i - 1 : i, width);
-                controller_zone->SetLED(i, color, Brightness, Temperature, Tint);
+                controller_zone->SetLED(i, color, Brightness, Temperature, Tint, Saturation);
             }
 
         }
@@ -170,7 +170,7 @@ void AudioVUMeter::StepEffect(std::vector<ControllerZone*> controller_zones)
                 for(unsigned int w = 0; w <  width; w++)
                 {
                     unsigned int led_num = map[h * width + w];
-                    controller_zone->SetLED(led_num, color, Brightness, Temperature, Tint);
+                    controller_zone->SetLED(led_num, color, Brightness, Temperature, Tint, Saturation);
                 }
             }
         }

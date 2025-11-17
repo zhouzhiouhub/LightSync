@@ -29,6 +29,7 @@ public:
     void SetBrightness(unsigned int value) override;
     void SetTemperature(int value) override;
     void SetTint(int value) override;
+    void SetSaturation(int value) override;
     void StepEffect(std::vector<ControllerZone*>) override;
     void LoadCustomSettings(json) override;
     json SaveCustomSettings() override;

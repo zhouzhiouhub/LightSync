@@ -147,24 +147,24 @@ public:
         return j;
     }
 
-    void SetAllZoneLEDs(RGBColor color, int brightness, int temperature, int tint)
+    void SetAllZoneLEDs(RGBColor color, int brightness, int temperature, int tint, int saturation)
     {
         if(is_segment)
         {
             for(unsigned int i = 0; i < leds_count(); i ++)
             {
-                SetLED(i, color, brightness, temperature, tint);
+                SetLED(i, color, brightness, temperature, tint, saturation);
             }
         }
         else
         {
-            controller->SetAllZoneLEDs(zone_idx, ColorUtils::apply_adjustments(color, (self_brightness / 100.f) * (brightness / 100.f), temperature, tint));
+            controller->SetAllZoneLEDs(zone_idx, ColorUtils::apply_adjustments(color, (self_brightness / 100.f) * (brightness / 100.f), temperature, tint, saturation));
         }
     }
 
-    void SetLED(int idx, RGBColor color, int brightness, int temperature, int tint)
+    void SetLED(int idx, RGBColor color, int brightness, int temperature, int tint, int saturation)
     {       
-        controller->SetLED(startidx() + idx, ColorUtils::apply_adjustments(color,  (self_brightness / 100.f) * (brightness / 100.f), temperature, tint));
+        controller->SetLED(startidx() + idx, ColorUtils::apply_adjustments(color,  (self_brightness / 100.f) * (brightness / 100.f), temperature, tint, saturation));
     }
 
     RGBColor GetLED(int idx)

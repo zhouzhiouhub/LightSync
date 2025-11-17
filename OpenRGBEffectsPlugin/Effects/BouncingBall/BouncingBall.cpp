@@ -91,6 +91,16 @@ void BouncingBall::SetTint(int value)
     }
 }
 
+void BouncingBall::SetSaturation(int value)
+{
+    Saturation = value;
+
+    for (BouncingBallSimulation* b: bouncingBallSimulations)
+    {
+        b->SetSaturation(value);
+    }
+}
+
 void BouncingBall::SetBrightness(unsigned int value)
 {
     Brightness = value;
@@ -123,7 +133,8 @@ void BouncingBall::OnControllerZonesListChanged(std::vector<ControllerZone*> con
                 dropHeightPercent,
                 Brightness,
                 Temperature,
-                Tint
+                Tint,
+                Saturation
             )
         );
     }

@@ -202,6 +202,7 @@ void OpenRGBEffectPage::InitUi()
 
     ui->Temperature->setValue(effect->GetTemperature());
     ui->Tint->setValue(effect->GetTint());
+    if(ui->Saturation) ui->Saturation->setValue(effect->GetSaturation());
 
     effect->SetRandomColorsEnabled(effect->IsRandomColorsEnabled());
 
@@ -389,6 +390,25 @@ void OpenRGBEffectPage::on_Tint_valueChanged(int value)
     }
 }
 
+void OpenRGBEffectPage::on_Saturation_valueChanged(int value)
+{
+    effect->SetSaturation(value);
+
+    // Keep common parameter in sync globally and propagate to active effects
+    OpenRGBEffectSettings::globalSettings.saturation = value;
+    OpenRGBEffectSettings::WriteGlobalSettings();
+
+    // Apply to all active/assigned effects so switching preserves saturation
+    for(const auto& mapping_entry : EffectManager::Get()->GetEffectsMapping())
+    {
+        RGBEffect* eff = mapping_entry.first;
+        if(eff != effect)
+        {
+            eff->SetSaturation(value);
+        }
+    }
+}
+
 void OpenRGBEffectPage::SavePatternAction()
 {
     std::vector<std::string> filenames = OpenRGBEffectSettings::ListPattern(effect->EffectDetails.EffectClassName);
@@ -513,6 +533,7 @@ json OpenRGBEffectPage::ToJson()
     effect_settings["Brightness"] = effect->GetBrightness();
     effect_settings["Temperature"] = effect->GetTemperature();
     effect_settings["Tint"] = effect->GetTint();
+    effect_settings["Saturation"] = effect->GetSaturation();
 
     std::vector<RGBColor> colors = effect->GetUserColors();
 
@@ -559,6 +580,11 @@ void OpenRGBEffectPage::ApplyJson(json effect_settings)
     if(effect_settings.contains("Tint"))
     {
         effect->SetTint(effect_settings["Tint"]);
+    }
+
+    if(effect_settings.contains("Saturation"))
+    {
+        effect->SetSaturation(effect_settings["Saturation"]);
     }
 
     if(effect_settings.contains("CustomSettings"))

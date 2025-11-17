@@ -88,6 +88,9 @@ public:
     virtual int GetTint() { return Tint; }
     virtual void SetTint(int value) { Tint = value; }
 
+    virtual int GetSaturation() { return Saturation; }
+    virtual void SetSaturation(int value) { Saturation = value; }
+
     EffectInfo EffectDetails;
 
     void EmitMeasure(float t, int d){ emit TimeMeasured(t, d); }
@@ -106,6 +109,7 @@ public:
         j["Brightness"]       = GetBrightness();
         j["Temperature"]      = GetTemperature();
         j["Tint"]             = GetTint();
+        j["Saturation"]       = GetSaturation();
 
         std::vector<RGBColor> colors = GetUserColors();
 
@@ -137,6 +141,7 @@ protected:
     float Brightness = 100;
     int Temperature = 0;
     int Tint = 0;
+    int Saturation = 100;
 };
 
 #endif // RGBEFFECT_H

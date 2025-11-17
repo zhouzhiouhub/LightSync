@@ -21,7 +21,8 @@ public:
         unsigned int dropHeightPercent,
         unsigned int Brightness,
         int Temperature,
-        int Tint
+        int Tint,
+        int Saturation
         );
 
     static float GetGravity(int value);
@@ -36,6 +37,7 @@ public:
     void SetBrightness(unsigned int);
     void SetTemperature(int);
     void SetTint(int);
+    void SetSaturation(int);
     void SetWidth(unsigned int);
     void SetHeight(unsigned int);
     void SetRadius(unsigned int);
@@ -73,6 +75,7 @@ private:
     unsigned int Brightness;
     int Temperature=0;
     int Tint=0;
+    int Saturation=100;
     int width;
     int height;
     int numLeds;

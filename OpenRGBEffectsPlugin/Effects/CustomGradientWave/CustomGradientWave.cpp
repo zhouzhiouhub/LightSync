@@ -106,7 +106,7 @@ void CustomGradientWave::StepEffect(std::vector<ControllerZone*> controller_zone
             for (int LedID = 0; LedID < leds_count; LedID++)
             {
                 RGBColor color = GetColor(reverse ? leds_count - LedID - 1 : LedID, 0, leds_count, 1);
-                controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint);
+                controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
             }
         }
 
@@ -121,7 +121,7 @@ void CustomGradientWave::StepEffect(std::vector<ControllerZone*> controller_zone
                 {
                     RGBColor color = GetColor(reverse ? cols - col_id - 1: col_id, row_id, cols, rows);
                     int LedID = controller_zone->map()[((row_id * cols) + col_id)];
-                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint);
+                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
                 }
             }
 

@@ -16,6 +16,7 @@ struct GlobalSettingsStruct
     int  fps = 60;
     int  temperature = 0;
     int  tint = 0;
+    int  saturation = 100;
     bool hide_unsupported = true;
     bool prefer_random = false;
     bool use_prefered_colors = false;

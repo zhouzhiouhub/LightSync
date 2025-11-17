@@ -227,12 +227,25 @@ public:
                     );
     }
 
-    static RGBColor apply_adjustments(RGBColor color, float brightness, int temperature, int tint)
+    static RGBColor apply_adjustments(RGBColor color, float brightness, int temperature, int tint, int saturation)
     {
+        RGBColor c = color;
+
+        if(saturation != 100)
+        {
+            hsv_t hsv;
+            rgb2hsv(c, &hsv);
+
+            float satFactor = std::max<float>(0.0f, std::min<float>(2.0f, saturation / 100.0f));
+            hsv.saturation = std::clamp<int>(static_cast<int>(hsv.saturation * satFactor), 0, 255);
+
+            c = RGBColor(hsv2rgb(&hsv));
+        }
+
         return ToRGBColor(
-                    (int)( std::clamp<int>(RGBGetRValue(color) * (1.0 + (temperature/255.0)), 0, 255)    * brightness),
-                    (int)( std::clamp<int>(RGBGetGValue(color) * (1.0 + (tint/255.0)), 0 , 255)          * brightness),
-                    (int)( std::clamp<int>(RGBGetBValue(color) * (1.0 - (temperature/255.0)), 0 , 255)   * brightness)
+                    (int)( std::clamp<int>(RGBGetRValue(c) * (1.0 + (temperature/255.0)), 0, 255)    * brightness),
+                    (int)( std::clamp<int>(RGBGetGValue(c) * (1.0 + (tint/255.0)), 0 , 255)          * brightness),
+                    (int)( std::clamp<int>(RGBGetBValue(c) * (1.0 - (temperature/255.0)), 0 , 255)   * brightness)
                     );
     }
 

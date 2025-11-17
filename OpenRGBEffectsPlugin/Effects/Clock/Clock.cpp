@@ -70,7 +70,7 @@ void Clock::StepEffect(std::vector<ControllerZone*> controller_zones)
             for(unsigned int i = 0; i < width; i++)
             {
                 RGBColor color = GetColor(reverse ? width - i - 1 : i, width, mode);
-                controller_zone->SetLED(i, color, Brightness, Temperature, Tint);
+                controller_zone->SetLED(i, color, Brightness, Temperature, Tint, Saturation);
             }
 
         }
@@ -86,7 +86,7 @@ void Clock::StepEffect(std::vector<ControllerZone*> controller_zones)
                 for (int row_id = 0; row_id < rows; row_id++)
                 {
                     int LedID = controller_zone->map()[((row_id * cols) + col_id)];
-                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint);
+                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
                 }
             }
         }

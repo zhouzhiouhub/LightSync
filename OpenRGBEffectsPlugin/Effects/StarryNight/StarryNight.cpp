@@ -52,7 +52,7 @@ void StarryNight::StepEffect(std::vector<ControllerZone*> controller_zones)
             for (int idx = 0; idx < controller_zones.size(); idx++)
             {
                 //controller_zones[idx]->SetAllZoneLEDs(ui->backColor->CurrentRGBColor(), Brightness, Temperature, Tint);
-                controller_zones[idx]->SetAllZoneLEDs(ColorUtils::apply_brightness(ui->backColor->CurrentRGBColor(), float(ui->backColorBrightness->value()) / 100), Brightness, Temperature, Tint);
+                controller_zones[idx]->SetAllZoneLEDs(ColorUtils::apply_brightness(ui->backColor->CurrentRGBColor(), float(ui->backColorBrightness->value()) / 100), Brightness, Temperature, Tint, Saturation);
             }
             backgroundColorChanged = false;
         }
@@ -61,7 +61,7 @@ void StarryNight::StepEffect(std::vector<ControllerZone*> controller_zones)
         for(unsigned int i = 0; i < stars.size(); i++)
         {
             // update the colors for LEDs that are stars
-            controller_zones[stars[i].controllerIdx]->SetLED(stars[i].ctrlLedIdx, stars[i].intColor, Brightness, Temperature, Tint);
+            controller_zones[stars[i].controllerIdx]->SetLED(stars[i].ctrlLedIdx, stars[i].intColor, Brightness, Temperature, Tint, Saturation);
         }
     }
 }
@@ -280,7 +280,7 @@ void StarryNight::OnControllerZonesListChanged(std::vector<ControllerZone*> cont
         for(int idx = 0; idx < controller_zones.size(); idx++)
         {
             // Set the color as the background color
-            controller_zones[idx]->SetAllZoneLEDs(ColorUtils::apply_brightness(ui->backColor->CurrentRGBColor(), float(ui->backColorBrightness->value()) / 100), Brightness, Temperature, Tint);
+            controller_zones[idx]->SetAllZoneLEDs(ColorUtils::apply_brightness(ui->backColor->CurrentRGBColor(), float(ui->backColorBrightness->value()) / 100), Brightness, Temperature, Tint, Saturation);
         }
         // Since the controllers changed, we need to reset the mapping and star information as they may no longer be valid
         ResetStarryNight(controller_zones);

@@ -159,7 +159,7 @@ void SparkleFade::StepEffect(std::vector<ControllerZone*> controller_zones)
 
             for (unsigned int LedID = 0; LedID < leds_count; LedID++)
             {
-                controller_zones[i]->SetLED(LedID, ledInfo[i][LedID].color, Brightness, Temperature, Tint);
+                controller_zones[i]->SetLED(LedID, ledInfo[i][LedID].color, Brightness, Temperature, Tint, Saturation);
             }
         }
 
@@ -174,7 +174,7 @@ void SparkleFade::StepEffect(std::vector<ControllerZone*> controller_zones)
                 {
                     int idx = (row_id * cols) + col_id;
                     int LedID = controller_zones[i]->map()[idx];
-                    controller_zones[i]->SetLED(LedID, ledInfo[i][LedID].color, Brightness, Temperature, Tint);
+                    controller_zones[i]->SetLED(LedID, ledInfo[i][LedID].color, Brightness, Temperature, Tint, Saturation);
                 }
             }
 
@@ -210,7 +210,7 @@ void SparkleFade::OnControllerZonesListChanged(std::vector<ControllerZone*> cont
     {
         for (unsigned int ctrlIdx = 0; ctrlIdx < controller_zones.size(); ctrlIdx++)
         {
-            controller_zones[ctrlIdx]->SetAllZoneLEDs(ColorUtils::OFF(), Brightness, Temperature, Tint);
+            controller_zones[ctrlIdx]->SetAllZoneLEDs(ColorUtils::OFF(), Brightness, Temperature, Tint, Saturation);
         }
     }
 }

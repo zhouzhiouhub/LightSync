@@ -53,7 +53,7 @@ void BreathingCircle::StepEffect(std::vector<ControllerZone*> controller_zones)
             for (int LedID = 0; LedID < leds_count; LedID++)
             {
                 RGBColor color = GetColor(LedID, 0, leds_count, 1);
-                controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint);
+                controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
             }
         }
 
@@ -69,7 +69,7 @@ void BreathingCircle::StepEffect(std::vector<ControllerZone*> controller_zones)
                     RGBColor color = GetColor(col_id, row_id, cols-1, rows-1);
 
                     int LedID = controller_zone->map()[((row_id * cols) + col_id)];
-                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint);
+                    controller_zone->SetLED(LedID, color, Brightness, Temperature, Tint, Saturation);
                 }
             }
         }

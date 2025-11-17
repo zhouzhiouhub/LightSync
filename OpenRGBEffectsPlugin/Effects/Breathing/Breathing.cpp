@@ -72,7 +72,7 @@ void Breathing::StepEffect(std::vector<ControllerZone*> controller_zones)
 
     for (ControllerZone* controller_zone: controller_zones)
     {
-        controller_zone->SetAllZoneLEDs(hsv2rgb(&CurrentColor), Brightness, Temperature, Tint);
+        controller_zone->SetAllZoneLEDs(hsv2rgb(&CurrentColor), Brightness, Temperature, Tint, Saturation);
     }
 }
 

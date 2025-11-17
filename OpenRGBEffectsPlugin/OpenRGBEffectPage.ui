@@ -364,6 +364,26 @@
           </property>
          </widget>
         </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="SaturationLabel">
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QSpinBox" name="Saturation">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

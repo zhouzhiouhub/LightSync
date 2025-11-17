@@ -470,7 +470,7 @@ void AudioVisualizer::StepEffect(std::vector<ControllerZone*> controller_zones)
 
                         if( color_idx != 0xFFFFFFFF )
                         {
-                            controller_zone->SetLED(color_idx, pixels_out->pixels[zone_index_map->y_index[y]][zone_index_map->x_index[x]], Brightness, Temperature, Tint);
+                            controller_zone->SetLED(color_idx, pixels_out->pixels[zone_index_map->y_index[y]][zone_index_map->x_index[x]], Brightness, Temperature, Tint, Saturation);
                         }
                     }
                 }
@@ -479,14 +479,14 @@ void AudioVisualizer::StepEffect(std::vector<ControllerZone*> controller_zones)
             case ZONE_TYPE_SINGLE:
                 for (int r = 0; r < x_count; r++)
                 {
-                    controller_zone->SetLED(r, pixels_out->pixels[ROW_IDX_SINGLE_COLOR][0], Brightness, Temperature, Tint);
+                    controller_zone->SetLED(r, pixels_out->pixels[ROW_IDX_SINGLE_COLOR][0], Brightness, Temperature, Tint, Saturation);
                 }
                 break;
 
             case ZONE_TYPE_LINEAR:
                 for (int x = 0; x < x_count; x++)
                 {
-                    controller_zone->SetLED(x, pixels_out->pixels[ROW_IDX_BAR_GRAPH][zone_index_map->x_index[x]], Brightness, Temperature, Tint);
+                    controller_zone->SetLED(x, pixels_out->pixels[ROW_IDX_BAR_GRAPH][zone_index_map->x_index[x]], Brightness, Temperature, Tint, Saturation);
                 }
                 break;
 

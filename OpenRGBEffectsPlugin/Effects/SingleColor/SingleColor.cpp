@@ -45,7 +45,7 @@ void SingleColor::StepEffect(std::vector<ControllerZone*> controller_zones)
 
 	for(ControllerZone* controller_zone : controller_zones)
 	{
-		controller_zone->SetAllZoneLEDs(color, Brightness, Temperature, Tint);
+		controller_zone->SetAllZoneLEDs(color, Brightness, Temperature, Tint, Saturation);
 	}
 }
 

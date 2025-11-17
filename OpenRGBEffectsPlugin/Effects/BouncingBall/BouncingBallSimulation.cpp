@@ -10,13 +10,15 @@ BouncingBallSimulation::BouncingBallSimulation(
         unsigned int dropHeightPercent,
         unsigned int Brightness,
         int Temperature,
-        int Tint
+        int Tint,
+        int Saturation
         ):
     controllerZone(controllerZone),
     fps(fps),
     Brightness(Brightness),
     Temperature(Temperature),
     Tint(Tint),
+    Saturation(Saturation),
     radius(radius),
     dropHeightPercent(dropHeightPercent),
     spectrumVelocity(spectrumVelocity)
@@ -104,7 +106,7 @@ void BouncingBallSimulation::StepEffect()
                 ? controllerZone->map()[ledIndex]
                   : ledIndex;
 
-        controllerZone->SetLED(ledId, RGBColor(hsv2rgb(&pixelColor)), Brightness, Temperature, Tint);
+        controllerZone->SetLED(ledId, RGBColor(hsv2rgb(&pixelColor)), Brightness, Temperature, Tint, Saturation);
 
         // Update new and old LED indices
         newLedIds.insert(ledId);
@@ -114,7 +116,7 @@ void BouncingBallSimulation::StepEffect()
     // Turn off LEDs no longer within radius of ball
     for (const unsigned int& oldLedId : oldLedIds)
     {
-        controllerZone->SetLED(oldLedId, 0, Brightness, Temperature, Tint);
+        controllerZone->SetLED(oldLedId, 0, Brightness, Temperature, Tint, Saturation);
     }
 
     // New LEDs changed this frame will be old LEDs next frame
@@ -246,7 +248,7 @@ void BouncingBallSimulation::initSimulation()
 
     oldLedIds.clear();
     newLedIds.clear();
-    controllerZone->SetAllZoneLEDs(0, Brightness, Temperature, Tint);
+    controllerZone->SetAllZoneLEDs(0, Brightness, Temperature, Tint, Saturation);
 }
 
 void BouncingBallSimulation::SetBrightness(unsigned int value)
@@ -267,6 +269,13 @@ void BouncingBallSimulation::SetTint(int value)
 {
     lockObj.lock();
     Tint = value;
+    lockObj.unlock();
+}
+
+void BouncingBallSimulation::SetSaturation(int value)
+{
+    lockObj.lock();
+    Saturation = value;
     lockObj.unlock();
 }
 

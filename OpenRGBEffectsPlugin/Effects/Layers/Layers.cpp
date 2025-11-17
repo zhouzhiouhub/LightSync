@@ -103,7 +103,7 @@ void Layers::StepEffect(std::vector<ControllerZone*> controller_zones)
         }
 
         // Run group effect
-        layer_groups[g]->StepEffect(controller_zones, Brightness, Temperature, Tint);
+        layer_groups[g]->StepEffect(controller_zones, Brightness, Temperature, Tint, Saturation);
 
         // Compose + set new state
         // No need to compose if we have only one group
