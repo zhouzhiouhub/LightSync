@@ -51,6 +51,7 @@ SOURCES +=                                                                      
     ../OpenRGBEffectsPlugin/Effects/RotatingRainbow/RotatingRainbow.cpp                         \
     ../OpenRGBEffectsPlugin/Effects/Sequence/Sequence.cpp                                       \
     ../OpenRGBEffectsPlugin/Effects/SmoothBlink/SmoothBlink.cpp                                 \
+    ../OpenRGBEffectsPlugin/Effects/SingleColor/SingleColor.cpp                                 \
     ../OpenRGBEffectsPlugin/Effects/SpectrumCycling/SpectrumCycling.cpp                         \
     ../OpenRGBEffectsPlugin/Effects/SparkleFade/SparkleFade.cpp                                 \
     ../OpenRGBEffectsPlugin/Effects/Spiral/Spiral.cpp                                           \
@@ -113,6 +114,7 @@ HEADERS +=                                                                      
     ../OpenRGBEffectsPlugin/Effects/RotatingRainbow/RotatingRainbow.h                           \
     ../OpenRGBEffectsPlugin/Effects/Sequence/Sequence.h                                         \
     ../OpenRGBEffectsPlugin/Effects/SmoothBlink/SmoothBlink.h                                   \
+    ../OpenRGBEffectsPlugin/Effects/SingleColor/SingleColor.h                                   \
     ../OpenRGBEffectsPlugin/Effects/SparkleFade/SparkleFade.h                                   \
     ../OpenRGBEffectsPlugin/Effects/SpectrumCycling/SpectrumCycling.h                           \
     ../OpenRGBEffectsPlugin/Effects/Spiral/Spiral.h                                             \
@@ -150,6 +152,7 @@ FORMS +=                                                                        
     ../OpenRGBEffectsPlugin/Effects/DoubleRotatingRainbow/DoubleRotatingRainbow.ui              \
     ../OpenRGBEffectsPlugin/Effects/Fill/Fill.ui                                                \
     ../OpenRGBEffectsPlugin/Effects/FractalMotion/FractalMotion.ui                              \
+    ../OpenRGBEffectsPlugin/Effects/SingleColor/SingleColor.ui                                  \
     ../OpenRGBEffectsPlugin/Effects/GifPlayer/GifPlayer.ui                                      \
     ../OpenRGBEffectsPlugin/Effects/Hypnotoad/Hypnotoad.ui                                      \
     ../OpenRGBEffectsPlugin/Effects/Layers/Layers.ui                                            \

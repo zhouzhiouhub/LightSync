@@ -408,6 +408,7 @@ SOURCES +=                                                                      
     Effects/RotatingRainbow/RotatingRainbow.cpp                                                 \
     Effects/Sequence/Sequence.cpp                                                               \
     Effects/SmoothBlink/SmoothBlink.cpp                                                         \
+    Effects/SingleColor/SingleColor.cpp                                                         \
     Effects/SpectrumCycling/SpectrumCycling.cpp                                                 \
     Effects/SparkleFade/SparkleFade.cpp                                                         \
     Effects/Spiral/Spiral.cpp                                                                   \
@@ -470,6 +471,7 @@ HEADERS +=                                                                      
     Effects/RotatingRainbow/RotatingRainbow.h                                                   \
     Effects/Sequence/Sequence.h                                                                 \
     Effects/SmoothBlink/SmoothBlink.h                                                           \
+    Effects/SingleColor/SingleColor.h                                                           \
     Effects/SparkleFade/SparkleFade.h                                                           \
     Effects/SpectrumCycling/SpectrumCycling.h                                                   \
     Effects/Spiral/Spiral.h                                                                     \
@@ -507,6 +509,7 @@ FORMS +=                                                                        
     Effects/DoubleRotatingRainbow/DoubleRotatingRainbow.ui                                      \
     Effects/Fill/Fill.ui                                                                        \
     Effects/FractalMotion/FractalMotion.ui                                                      \
+    Effects/SingleColor/SingleColor.ui                                                          \
     Effects/GifPlayer/GifPlayer.ui                                                              \
     Effects/Hypnotoad/Hypnotoad.ui                                                              \
     Effects/Layers/Layers.ui                                                                    \
