@@ -306,11 +306,39 @@ void OpenRGBEffectPage::on_Slider2_valueChanged(int value)
 void OpenRGBEffectPage::on_FPS_slider_valueChanged(int value)
 {
     effect->SetFPS(value);
+
+    // Keep common parameter in sync globally and propagate to active effects
+    OpenRGBEffectSettings::globalSettings.fps = value;
+    OpenRGBEffectSettings::WriteGlobalSettings();
+
+    // Apply to all active/assigned effects so switching preserves FPS
+    for(const auto& mapping_entry : EffectManager::Get()->GetEffectsMapping())
+    {
+        RGBEffect* eff = mapping_entry.first;
+        if(eff != effect)
+        {
+            eff->SetFPS(value);
+        }
+    }
 }
 
 void OpenRGBEffectPage::on_Brightness_slider_valueChanged(int value)
 {
     effect->SetBrightness(value);
+
+    // Keep common parameter in sync globally and propagate to active effects
+    OpenRGBEffectSettings::globalSettings.brightness = value;
+    OpenRGBEffectSettings::WriteGlobalSettings();
+
+    // Apply to all active/assigned effects so switching preserves brightness
+    for(const auto& mapping_entry : EffectManager::Get()->GetEffectsMapping())
+    {
+        RGBEffect* eff = mapping_entry.first;
+        if(eff != effect)
+        {
+            eff->SetBrightness(value);
+        }
+    }
 }
 
 void OpenRGBEffectPage::on_RandomCheckbox_clicked()
@@ -326,11 +354,39 @@ void OpenRGBEffectPage::on_OnlyFirst_clicked()
 void OpenRGBEffectPage::on_Temperature_valueChanged(int value)
 {
     effect->SetTemperature(value);
+
+    // Keep common parameter in sync globally and propagate to active effects
+    OpenRGBEffectSettings::globalSettings.temperature = value;
+    OpenRGBEffectSettings::WriteGlobalSettings();
+
+    // Apply to all active/assigned effects so switching preserves temperature
+    for(const auto& mapping_entry : EffectManager::Get()->GetEffectsMapping())
+    {
+        RGBEffect* eff = mapping_entry.first;
+        if(eff != effect)
+        {
+            eff->SetTemperature(value);
+        }
+    }
 }
 
 void OpenRGBEffectPage::on_Tint_valueChanged(int value)
 {
     effect->SetTint(value);
+
+    // Keep common parameter in sync globally and propagate to active effects
+    OpenRGBEffectSettings::globalSettings.tint = value;
+    OpenRGBEffectSettings::WriteGlobalSettings();
+
+    // Apply to all active/assigned effects so switching preserves tint
+    for(const auto& mapping_entry : EffectManager::Get()->GetEffectsMapping())
+    {
+        RGBEffect* eff = mapping_entry.first;
+        if(eff != effect)
+        {
+            eff->SetTint(value);
+        }
+    }
 }
 
 void OpenRGBEffectPage::SavePatternAction()
