@@ -16,6 +16,7 @@
 #include "ResourceManager.h"
 #include "SettingsManager.h"
 #include "ProfileManager.h"
+#include "OpenRGBThemeManager.h"
 
 OpenRGBSettingsPage::OpenRGBSettingsPage(QWidget *parent) :
     QWidget(parent),
@@ -506,6 +507,9 @@ void OpenRGBSettingsPage::on_ComboBoxTheme_currentTextChanged(const QString them
         theme_settings["theme"] = theme.toStdString();
         ResourceManager::get()->GetSettingsManager()->SetSettings("Theme", theme_settings);
         SaveSettings();
+
+        // Apply immediately without needing restart
+        OpenRGBThemeManager::ApplyThemeFromSettings();
     }
 }
 

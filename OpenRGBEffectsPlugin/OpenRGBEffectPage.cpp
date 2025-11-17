@@ -61,20 +61,20 @@ OpenRGBEffectPage::OpenRGBEffectPage(QWidget *parent, RGBEffect* effect):
     QMenu* main_menu = new QMenu(this);
     ui->main_menu->setMenu(main_menu);
 
-    QAction* save_pattern = new QAction("Save pattern", this);
+    QAction* save_pattern = new QAction(tr("Save pattern"), this);
     connect(save_pattern, &QAction::triggered, this, &OpenRGBEffectPage::SavePatternAction);
     main_menu->addAction(save_pattern);
 
-    QAction* load_pattern = new QAction("Load pattern", this);
+    QAction* load_pattern = new QAction(tr("Load pattern"), this);
     connect(load_pattern, &QAction::triggered, this, &OpenRGBEffectPage::LoadPatternAction);
     main_menu->addAction(load_pattern);
 
-    QAction* edit_pattern = new QAction("Edit pattern", this);
+    QAction* edit_pattern = new QAction(tr("Edit pattern"), this);
     connect(edit_pattern, &QAction::triggered, this, &OpenRGBEffectPage::EditPatternAction);
     main_menu->addAction(edit_pattern);
 
 
-    QAction* open_pattern_folder = new QAction("Open patterns folder", this);
+    QAction* open_pattern_folder = new QAction(tr("Open patterns folder"), this);
     connect(open_pattern_folder, &QAction::triggered, this, &OpenRGBEffectPage::OpenPatternsFolder);
     main_menu->addAction(open_pattern_folder);
 }
@@ -91,8 +91,7 @@ void OpenRGBEffectPage::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         ui->EffectName->setText(QString().fromStdString(effect->EffectDetails.EffectName));
         ui->EffectDesciption->setText(QString().fromStdString(effect->EffectDetails.EffectDescription));
-        ui->Slider2Label->setText(QCoreApplication::translate(effect->EffectDetails.EffectClassName.c_str(),
-                                                              effect->EffectDetails.Slider2Name.c_str()));
+        ui->Slider2Label->setText(QString::fromStdString(effect->EffectDetails.Slider2Name));
     }
 }
 
@@ -116,8 +115,8 @@ void OpenRGBEffectPage::InitUi()
     /*---------------------------------*\
     | Fill in top description and name  |
     \*---------------------------------*/
-    ui->EffectName->setText(tr(effect->EffectDetails.EffectName.c_str()));
-    ui->EffectDesciption->setText(tr(effect->EffectDetails.EffectDescription.c_str()));
+    ui->EffectName->setText(QString::fromStdString(effect->EffectDetails.EffectName));
+    ui->EffectDesciption->setText(QString::fromStdString(effect->EffectDetails.EffectDescription));
 
     ui->RandomCheckbox->setCheckState(effect->IsRandomColorsEnabled()? Qt::Checked : Qt::Unchecked);
     ui->OnlyFirst->setCheckState(effect->IsOnlyFirstColorEnabled()? Qt::Checked : Qt::Unchecked);
@@ -418,18 +417,18 @@ void OpenRGBEffectPage::SavePatternAction()
     if(filenames.empty())
     {
         filename = QInputDialog::getText(
-                    nullptr, "Save pattern to file...", "Choose a filename",
-                    QLineEdit::Normal, QString("my-pattern")).trimmed();
+                    nullptr, tr("Save pattern to file..."), tr("Choose a filename"),
+                    QLineEdit::Normal, tr("my-pattern")).trimmed();
     }
     else
     {
         QDialog dialog;
 
         dialog.setModal(true);
-        dialog.setWindowTitle("Save pattern to file...");
+        dialog.setWindowTitle(tr("Save pattern to file..."));
 
-        QLabel text1("Choose an existing pattern from this list:", &dialog);
-        QLabel text2("Or create a new one:", &dialog);
+        QLabel text1(tr("Choose an existing pattern from this list:"), &dialog);
+        QLabel text2(tr("Or create a new one:"), &dialog);
 
         QVBoxLayout dialog_layout(&dialog);
         QListWidget list_widget(&dialog);
@@ -441,7 +440,7 @@ void OpenRGBEffectPage::SavePatternAction()
 
         QLineEdit filename_input(&dialog);
 
-        filename_input.setText(QString("my-pattern"));
+        filename_input.setText(tr("my-pattern"));
 
         dialog_layout.addWidget(&text1);
         dialog_layout.addWidget(&list_widget);
@@ -451,11 +450,11 @@ void OpenRGBEffectPage::SavePatternAction()
         QHBoxLayout buttons_layout;
 
         QPushButton ok_button;
-        ok_button.setText("OK");
+        ok_button.setText(tr("OK"));
         buttons_layout.addWidget(&ok_button);
 
         QPushButton cancel_button;
-        cancel_button.setText("Cancel");
+        cancel_button.setText(tr("Cancel"));
         dialog.connect(&cancel_button,SIGNAL(clicked()),&dialog,SLOT(reject()));
         buttons_layout.addWidget(&cancel_button);
 
@@ -493,7 +492,7 @@ void OpenRGBEffectPage::LoadPatternAction()
     if(file_list.empty())
     {
         QMessageBox empty_msg_box(this);
-        empty_msg_box.setText("You currently have no patterns for this effect.\nUse the save pattern action first.");
+        empty_msg_box.setText(tr("You currently have no patterns for this effect.\nUse the save pattern action first."));
         empty_msg_box.exec();
         return;
     }
@@ -502,8 +501,8 @@ void OpenRGBEffectPage::LoadPatternAction()
 
     inp.setOptions(QInputDialog::UseListViewForComboBoxItems);
     inp.setComboBoxItems(file_list);
-    inp.setWindowTitle("Load pattern from file...");
-    inp.setLabelText("Choose a pattern file from this list:");
+    inp.setWindowTitle(tr("Load pattern from file..."));
+    inp.setLabelText(tr("Choose a pattern file from this list:"));
 
     if(!inp.exec()){
         return;
@@ -633,7 +632,7 @@ void OpenRGBEffectPage::EditPatternAction()
     QDialog dialog;
 
     dialog.setModal(true);
-    dialog.setWindowTitle("Edit or share your settings.");
+    dialog.setWindowTitle(tr("Edit or share your settings."));
 
     QVBoxLayout dialog_layout(&dialog);
 
@@ -646,12 +645,12 @@ void OpenRGBEffectPage::EditPatternAction()
     QHBoxLayout buttons_layout;
 
     QPushButton cancel_button;
-    cancel_button.setText("Cancel");
+    cancel_button.setText(tr("Cancel"));
     dialog.connect(&cancel_button,SIGNAL(clicked()),&dialog,SLOT(reject()));
     buttons_layout.addWidget(&cancel_button);
 
     QPushButton copy_button;
-    copy_button.setText("Copy to clipboard");
+    copy_button.setText(tr("Copy to clipboard"));
 
     dialog.connect(&copy_button, &QPushButton::clicked, [&](){
         std::string text =
@@ -666,7 +665,7 @@ void OpenRGBEffectPage::EditPatternAction()
     buttons_layout.addWidget(&copy_button);
 
     QPushButton accept_button;
-    accept_button.setText("Apply");
+    accept_button.setText(tr("Apply"));
     dialog.connect(&accept_button,SIGNAL(clicked()),&dialog,SLOT(accept()));
     buttons_layout.addWidget(&accept_button);
 

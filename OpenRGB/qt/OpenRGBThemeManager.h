@@ -17,4 +17,6 @@ public:
     static void Init();
     static void SetDarkTheme();
     static bool IsDarkTheme();
+    // Apply the theme immediately based on current settings ("Auto"|"Light"|"Dark")
+    static void ApplyThemeFromSettings();
 };

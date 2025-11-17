@@ -124,3 +124,21 @@ bool OpenRGBThemeManager::IsDarkTheme()
 
     return false;
 }
+
+void OpenRGBThemeManager::ApplyThemeFromSettings()
+{
+#ifdef __APPLE__
+    // Ensure Fusion on macOS for better tab rendering
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+#endif
+
+    if(IsDarkTheme())
+    {
+        SetDarkTheme();
+    }
+    else
+    {
+        // Reset to default palette (light / system)
+        QApplication::setPalette(QPalette());
+    }
+}

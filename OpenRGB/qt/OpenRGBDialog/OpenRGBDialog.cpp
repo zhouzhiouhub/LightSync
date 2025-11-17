@@ -264,6 +264,14 @@ OpenRGBDialog::OpenRGBDialog(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     }
 
     /*-----------------------------------------------------*\
+    | Set default initial size when not loading geometry     |
+    \*-----------------------------------------------------*/
+    if(!load_geometry)
+    {
+        resize(800, 600);
+    }
+
+    /*-----------------------------------------------------*\
     | If autoload_profiles doesn't exist or has missing     |
     | profiles, write it to config                          |
     \*-----------------------------------------------------*/

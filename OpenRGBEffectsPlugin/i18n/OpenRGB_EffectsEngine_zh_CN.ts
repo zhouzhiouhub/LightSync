@@ -63,7 +63,113 @@
         <source>Crop stream</source>
         <translation>交叉流</translation>
     </message>
-</context>
+    </message>
+    <message>
+        <source>Save pattern</source>
+        <translation>保存样式</translation>
+    </message>
+    <message>
+        <source>Load pattern</source>
+        <translation>加载样式</translation>
+    </message>
+    <message>
+        <source>Edit pattern</source>
+        <translation>编辑样式</translation>
+    </message>
+    <message>
+        <source>Open patterns folder</source>
+        <translation>打开样式文件夹</translation>
+    </message>
+    <message>
+        <source>Save pattern to file...</source>
+        <translation>将样式保存到文件...</translation>
+    </message>
+    <message>
+        <source>Choose a filename</source>
+        <translation>选择文件名</translation>
+    </message>
+    <message>
+        <source>my-pattern</source>
+        <translation>我的样式</translation>
+    </message>
+    <message>
+        <source>Choose an existing pattern from this list:</source>
+        <translation>从列表中选择一个已有样式：</translation>
+    </message>
+    <message>
+        <source>Or create a new one:</source>
+        <translation>或者创建一个新的：</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>You currently have no patterns for this effect.
+Use the save pattern action first.</source>
+        <translation>当前此效果没有任何样式。
+请先使用“保存样式”功能。</translation>
+    </message>
+    <message>
+        <source>Load pattern from file...</source>
+        <translation>从文件加载样式...</translation>
+    </message>
+    <message>
+        <source>Choose a pattern file from this list:</source>
+        <translation>从列表中选择一个样式文件：</translation>
+    </message>
+    <message>
+        <source>Edit or share your settings.</source>
+        <translation>编辑或分享你的设置。</translation>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation>复制到剪贴板</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>应用</translation>
+    </message>
+    </context>
+<context>
+    <name>OpenRGBEffectTab</name>
+    <message>
+        <source>Effects</source>
+        <translation>效果</translation>
+    </message>
+    <message>
+        <source>Global settings</source>
+        <translation>全局设置</translation>
+    </message>
+    <message>
+        <source>Delete profile?</source>
+        <translation>删除配置文件？</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this profile?</source>
+        <translation>确定要删除此配置文件吗？</translation>
+    </message>
+    <message>
+        <source>my-profile</source>
+        <translation>我的配置</translation>
+    </message>
+    <message>
+        <source>Save to profile</source>
+        <translation>保存到配置</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>An error has occurred, check the application logs for more details.</source>
+        <translation>发生错误，请查看应用日志以获取更多详情。</translation>
+    </message>
+    </context>
 <context>
     <name>AudioParty</name>
     <message>

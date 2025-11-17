@@ -93,8 +93,15 @@ void OpenRGBEffectTab::SetLanguage()
         if (QMainWindow* mainWin = qobject_cast<QMainWindow*>(w))
         {
             QComboBox* language     = mainWin->findChild<QComboBox *>("ComboBoxLanguage");
-            new_file                = language->currentData().toString();
-            new_file                = new_file.replace("OpenRGB","OpenRGB_EffectsEngine");
+            if(language)
+            {
+                new_file            = language->currentData().toString();
+                new_file            = new_file.replace("OpenRGB","OpenRGB_EffectsEngine");
+            }
+            else
+            {
+                new_file = "default";
+            }
             break;
         }
     }
@@ -303,7 +310,7 @@ void OpenRGBEffectTab::on_device_list_SelectionChanged()
 void OpenRGBEffectTab::PluginInfoAction()
 {
     QDialog* dialog = new QDialog();
-    dialog->setWindowTitle("Effects");
+    dialog->setWindowTitle(tr("Effects"));
     dialog->setMinimumSize(300,320);
     dialog->setModal(true);
 
@@ -319,7 +326,7 @@ void OpenRGBEffectTab::PluginInfoAction()
 void OpenRGBEffectTab::GlobalSettingsAction()
 {
     QDialog dialog;
-    dialog.setWindowTitle("Global settings");
+    dialog.setWindowTitle(tr("Global settings"));
     dialog.setModal(true);
 
     QVBoxLayout dialog_layout(&dialog);
@@ -338,8 +345,8 @@ void OpenRGBEffectTab::DeleteProfileAction()
     if(!current_profile.isEmpty())
     {
         QMessageBox msgBox;
-        msgBox.setText("Delete profile?");
-        msgBox.setInformativeText("Are you sure to want to delete this profile?");
+        msgBox.setText(tr("Delete profile?"));
+        msgBox.setInformativeText(tr("Are you sure you want to delete this profile?"));
         msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Cancel);
         int ret = msgBox.exec();
@@ -359,11 +366,11 @@ void OpenRGBEffectTab::DeleteProfileAction()
 
 void OpenRGBEffectTab::SaveProfileAction()
 {
-    QString current_text = latest_loaded_profile.empty() ? "my-profile" : QString::fromStdString(latest_loaded_profile);
+    QString current_text = latest_loaded_profile.empty() ? tr("my-profile") : QString::fromStdString(latest_loaded_profile);
 
     QDialog* dialog = new QDialog(this);
 
-    dialog->setWindowTitle("Save to profile");
+    dialog->setWindowTitle(tr("Save to profile"));
 
     dialog->setModal(true);
 
@@ -426,7 +433,7 @@ void OpenRGBEffectTab::SaveProfileAction()
 
             if(!ok)
             {
-                QMessageBox::critical(this,"Error","An error has occured, check the application logs for more details.");
+                QMessageBox::critical(this, tr("Error"), tr("An error has occurred, check the application logs for more details."));
             }
             else
             {
