@@ -50,7 +50,8 @@ private:
     EffectList* effect_list = nullptr;
     QMenu* load_profile_menu;
 
-    std::string current_i18n_file = "default";
+	// Empty initial value ensures first SetLanguage() invocation loads translator
+	std::string current_i18n_file = "";
     QTranslator translator;
 
     std::string latest_loaded_profile = "";

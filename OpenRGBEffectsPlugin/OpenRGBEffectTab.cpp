@@ -19,6 +19,7 @@
 #include <QString>
 #include <QTabBar>
 #include <QTimer>
+#include <QCoreApplication>
 
 OpenRGBEffectTab::OpenRGBEffectTab(QWidget *parent):
     QWidget(parent),
@@ -87,6 +88,7 @@ void OpenRGBEffectTab::SetLanguage()
     QString new_file;
     bool loaded             = false;
     QApplication* app       = static_cast<QApplication *>(QApplication::instance());
+    QLocale locale          = QLocale(QLocale::system());
 
     for(QWidget *w : app->topLevelWidgets())
     {
@@ -96,7 +98,20 @@ void OpenRGBEffectTab::SetLanguage()
             if(language)
             {
                 new_file            = language->currentData().toString();
-                new_file            = new_file.replace("OpenRGB","OpenRGB_EffectsEngine");
+                printf("[OpenRGBEffectsPlugin] Language setting from UI: %s\n", new_file.toStdString().c_str());
+                // Replace app qm path with plugin qm path when a specific language is chosen
+                if(new_file != "default")
+                {
+                    new_file        = new_file.replace("OpenRGB","OpenRGB_EffectsEngine");
+                    // Try to derive locale from filename as fallback
+                    const int uscore = new_file.lastIndexOf('_');
+                    const int dotqm  = new_file.lastIndexOf(".qm");
+                    if(uscore != -1 && dotqm != -1 && dotqm > uscore)
+                    {
+                        const QString tag = new_file.mid(uscore + 1, dotqm - uscore - 1);
+                        locale = QLocale(tag);
+                    }
+                }
             }
             else
             {
@@ -106,24 +121,53 @@ void OpenRGBEffectTab::SetLanguage()
         }
     }
 
+    printf("[OpenRGBEffectsPlugin] Current i18n file: %s, New file: %s, System locale: %s\n", 
+           current_i18n_file.c_str(), new_file.toStdString().c_str(), locale.name().toStdString().c_str());
+
     if(new_file.toStdString() != current_i18n_file)
     {
         app->removeTranslator(&translator);
 
         if(new_file == "default")
         {
-            QLocale locale = QLocale(QLocale::system());
             QLocale::setDefault(locale);
-
+            // Try multiple robust load strategies
             loaded = translator.load(":/i18n/" + QString("OpenRGB_EffectsEngine_%1.qm").arg(locale.name()));
+            if(!loaded) loaded = translator.load(locale, "OpenRGB_EffectsEngine", "_", ":/i18n");
+            if(!loaded) loaded = translator.load(locale, "OpenRGB_EffectsEngine", "_", ":/translations");
+            if(!loaded) loaded = translator.load(QString("OpenRGB_EffectsEngine_%1").arg(locale.name()), ":/i18n");
+            if(!loaded) loaded = translator.load(QString("OpenRGB_EffectsEngine_%1").arg(locale.name()), ":/translations");
         }
         else
         {
+            // First try the exact path replacement
             loaded = translator.load(new_file);
+            // Fallback: use locale-based search in the i18n resource directory
+            if(!loaded) loaded = translator.load(locale, "OpenRGB_EffectsEngine", "_", ":/i18n");
+            if(!loaded) loaded = translator.load(locale, "OpenRGB_EffectsEngine", "_", ":/translations");
+            if(!loaded)
+            {
+                // Last attempt: build a resource file path explicitly
+                loaded = translator.load(":/i18n/" + QString("OpenRGB_EffectsEngine_%1.qm").arg(locale.name()));
+                if(!loaded) loaded = translator.load(":/translations/" + QString("OpenRGB_EffectsEngine_%1.qm").arg(locale.name()));
+            }
+            // Final attempt: look for loose .qm next to the plugin or executable
+            if(!loaded)
+            {
+                const QString appDir = QCoreApplication::applicationDirPath();
+                // look in i18n subfolder inside application dir
+                loaded = translator.load(appDir + "/i18n/" + QString("OpenRGB_EffectsEngine_%1.qm").arg(locale.name()));
+                // look directly in application dir
+                if(!loaded)
+                {
+                    loaded = translator.load(appDir + "/" + QString("OpenRGB_EffectsEngine_%1.qm").arg(locale.name()));
+                }
+            }
         }
 
         if(loaded)
         {
+            printf("[OpenRGBEffectsPlugin] Translation loaded successfully, installing translator\n");
             app->installTranslator(&translator);
             current_i18n_file = new_file.toStdString();
             ui->retranslateUi(this);
@@ -131,6 +175,14 @@ void OpenRGBEffectTab::SetLanguage()
 
             AddGlobalMenus();
         }
+        else
+        {
+            printf("[OpenRGBEffectsPlugin] WARNING: Failed to load translation file for locale %s\n", locale.name().toStdString().c_str());
+        }
+    }
+    else
+    {
+        printf("[OpenRGBEffectsPlugin] No change in language file, skipping reload\n");
     }
 }
 

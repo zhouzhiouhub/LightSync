@@ -63,7 +63,6 @@
         <source>Crop stream</source>
         <translation>交叉流</translation>
     </message>
-    </message>
     <message>
         <source>Save pattern</source>
         <translation>保存样式</translation>
@@ -135,6 +134,13 @@ Use the save pattern action first.</source>
         <translation>应用</translation>
     </message>
     </context>
+<context>
+    <name>AudioBubbles</name>
+    <message>
+        <source>Audio Bubbles</source>
+        <translation>音频气泡</translation>
+    </message>
+</context>
 <context>
     <name>OpenRGBEffectTab</name>
     <message>
