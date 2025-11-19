@@ -41,6 +41,7 @@ private:
 
     std::vector<DeviceListItem*> device_items;
     std::vector<ControllerZone*> controller_zones;
+    void ApplyIconFonts();
 };
 
 #endif // EFFECTSDEVICELIST_H

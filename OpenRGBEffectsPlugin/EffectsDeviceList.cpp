@@ -14,8 +14,7 @@ EffectsDeviceList::EffectsDeviceList(QWidget *parent) :
     ui->setupUi(this);
     ui->devices->setLayout(new QVBoxLayout(ui->devices));
 
-    ui->toggle_brightness->setFont(OpenRGBPluginsFont::GetFont());
-    ui->toggle_brightness->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::sun));
+    ApplyIconFonts();
 
     InitControllersList();
 }
@@ -30,6 +29,7 @@ void EffectsDeviceList::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ApplyIconFonts();
     }
 }
 
@@ -180,4 +180,11 @@ void EffectsDeviceList::ApplySelection(std::vector<ControllerZone*> selection)
     {
         item->ApplySelection(selection);
     }
+}
+
+void EffectsDeviceList::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->toggle_brightness->setFont(icon_font);
+    ui->toggle_brightness->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::sun));
 }

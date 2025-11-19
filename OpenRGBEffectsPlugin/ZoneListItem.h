@@ -45,6 +45,7 @@ private:
     ControllerZone* controller_zone;
     Ui::ZoneListItem *ui;
     void UpdateCheckState();
+    void ApplyIconFonts();
 };
 
 #endif // ZONELISTITEM_H

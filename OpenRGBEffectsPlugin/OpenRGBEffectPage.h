@@ -76,6 +76,7 @@ private:
     void ApplyJson(json);
 
     void ToggleInfo();
+    void ApplyIconFonts();
 };
 
 #endif // OPENRGBEFFECTPAGE_H

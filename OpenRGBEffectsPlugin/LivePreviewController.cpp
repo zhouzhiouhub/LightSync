@@ -46,8 +46,7 @@ LivePreviewController::LivePreviewController(QWidget *parent) :
 
     ui->brightness->setValue(modes[0].brightness);
 
-    ui->brightness_label->setFont(OpenRGBPluginsFont::GetFont());
-    ui->brightness_label->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::sun));
+    ApplyIconFonts();
 }
 
 LivePreviewController::~LivePreviewController()
@@ -65,6 +64,7 @@ void LivePreviewController::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ApplyIconFonts();
     }
 }
 
@@ -196,6 +196,13 @@ void LivePreviewController::Draw(QImage image){
                                                        Qt::KeepAspectRatio, Qt::FastTransformation))
                                       );
     }
+}
+
+void LivePreviewController::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->brightness_label->setFont(icon_font);
+    ui->brightness_label->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::sun));
 }
 
 void LivePreviewController::Update(std::string name, zone_type zt)

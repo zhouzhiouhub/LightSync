@@ -1,6 +1,24 @@
 #include "OpenRGBVisualMapPlugin.h"
 #include "TooltipProxy.h"
 #include "VisualMapSettingsManager.h"
+#include <QResource>
+
+namespace {
+struct VisualMapPluginResources
+{
+    VisualMapPluginResources()
+    {
+        Q_INIT_RESOURCE(resources);
+    }
+
+    ~VisualMapPluginResources()
+    {
+        Q_CLEANUP_RESOURCE(resources);
+    }
+};
+
+const VisualMapPluginResources visual_map_plugin_resources;
+} // namespace
 
 ResourceManagerInterface* OpenRGBVisualMapPlugin::RMPointer = nullptr;
 

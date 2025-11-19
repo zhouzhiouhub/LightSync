@@ -42,6 +42,7 @@ private slots:
 private:
     Ui::LayerEntry *ui;
     void PopulateCombos();
+    void ApplyIconFonts();
 
     std::vector<ControllerZone*> assigned_zones;
     bool state = false;

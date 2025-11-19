@@ -82,6 +82,7 @@ private:
     unsigned int height = presets[0].height;
 
     std::mutex lock;
+    void ApplyIconFonts();
 };
 
 #endif // LIVEPREVIEWCONTROLLER_H

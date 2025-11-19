@@ -46,6 +46,7 @@ private:
     Ui::DeviceListItem *ui;
     void SetupZonesListItems();
     std::vector<ZoneListItem*> zone_items;
+    void ApplyIconFonts();
 
     void RunGlobalCheckVerification();
 

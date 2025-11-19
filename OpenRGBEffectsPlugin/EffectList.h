@@ -43,6 +43,7 @@ private:
     EffectSearch*           effect_search;
     std::vector<QMenu*>     sub_menus;
     std::vector<QAction*>   sub_actions;
+    void ApplyIconFonts();
 };
 
 #endif // EFFECTLIST_H

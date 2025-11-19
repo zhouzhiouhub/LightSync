@@ -12,7 +12,9 @@ OpenRGBPluginsFont *OpenRGBPluginsFont::Get()
     if(!instance)
     {
         instance = new OpenRGBPluginsFont();
-        instance->fontId = QFontDatabase::addApplicationFont(":/OpenRGBPlugins.ttf");
+        // Load plugin-scoped icon font from resources. Path must match alias in resources.qrc
+        // OpenRGBVisualMapPlugin/resources.qrc: <file alias="visualmap/OpenRGBPlugins.ttf">OpenRGBPlugins.ttf</file>
+        instance->fontId = QFontDatabase::addApplicationFont(":/visualmap/OpenRGBPlugins.ttf");
 
         if(instance->fontId == -1)
         {

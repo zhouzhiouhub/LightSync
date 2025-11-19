@@ -10,12 +10,7 @@ EffectTabHeader::EffectTabHeader(QWidget *parent,  RGBEffect* effect) :
 {
     ui->setupUi(this);
 
-    ui->start_stop->setFont(OpenRGBPluginsFont::GetFont());
-    ui->rename->setFont(OpenRGBPluginsFont::GetFont());
-    ui->close->setFont(OpenRGBPluginsFont::GetFont());
-
-    ui->rename->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::rename));
-    ui->close->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::close));
+    ApplyIconFonts();
 
     ui->effect_name->setText(QString::fromStdString(effect->EffectDetails.EffectName));
     ToogleRunningIndicator(false);
@@ -29,11 +24,8 @@ EffectTabHeader::EffectTabHeader(QWidget *parent,  RGBEffect* effect) :
 
 void EffectTabHeader::ToogleRunningIndicator(bool state)
 {
-    ui->start_stop->setText(
-                state ?
-                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::toggle_off):
-                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::toggle_on)
-                    );
+    running_indicator = state;
+    ApplyIconFonts();
 
     ui->start_stop->setToolTip(state?"Started":"Stopped");
 }
@@ -52,6 +44,7 @@ void EffectTabHeader::changeEvent(QEvent *event)
         {
             ui->effect_name->setText(QString::fromStdString(effect->EffectDetails.EffectName));
         }
+        ApplyIconFonts();
     }
 }
 
@@ -82,4 +75,20 @@ void EffectTabHeader::on_rename_clicked()
 
         emit Renamed(text.toStdString());
     }
+}
+
+void EffectTabHeader::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->start_stop->setFont(icon_font);
+    ui->rename->setFont(icon_font);
+    ui->close->setFont(icon_font);
+
+    ui->start_stop->setText(
+                running_indicator ?
+                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::toggle_off):
+                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::toggle_on)
+                );
+    ui->rename->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::rename));
+    ui->close->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::close));
 }

@@ -29,10 +29,7 @@ OpenRGBEffectPage::OpenRGBEffectPage(QWidget *parent, RGBEffect* effect):
     ui->EffectDesciption->setVisible(false);
     ui->time_measure->setVisible(false);
 
-    ui->preview->setFont(OpenRGBPluginsFont::GetFont());
-    ui->toggle_info->setFont(OpenRGBPluginsFont::GetFont());
-    ui->preview->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::tv));
-    ui->toggle_info->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::chevron_down));
+    ApplyIconFonts();
 
     /*-----------------------------------------------*\
     | Extra options and custom widgets                |
@@ -92,6 +89,7 @@ void OpenRGBEffectPage::changeEvent(QEvent *event)
         ui->EffectName->setText(QString().fromStdString(effect->EffectDetails.EffectName));
         ui->EffectDesciption->setText(QString().fromStdString(effect->EffectDetails.EffectDescription));
         ui->Slider2Label->setText(QString::fromStdString(effect->EffectDetails.Slider2Name));
+        ApplyIconFonts();
     }
 }
 
@@ -614,6 +612,19 @@ void OpenRGBEffectPage::ToggleInfo()
                     );
     ui->EffectDesciption->setVisible(info_visible);
     ui->time_measure->setVisible(info_visible);
+}
+
+void OpenRGBEffectPage::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->preview->setFont(icon_font);
+    ui->toggle_info->setFont(icon_font);
+    ui->preview->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::tv));
+    ui->toggle_info->setText(
+                info_visible ?
+                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::chevron_up) :
+                    OpenRGBPluginsFont::icon(OpenRGBPluginsFont::chevron_down)
+                );
 }
 
 void OpenRGBEffectPage::on_toggle_info_clicked()

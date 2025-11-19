@@ -32,6 +32,8 @@ private slots:
 private:
     Ui::EffectTabHeader *ui;
     RGBEffect           *effect;
+    bool running_indicator = false;
+    void ApplyIconFonts();
 };
 
 #endif // EFFECTTABHEADER_H

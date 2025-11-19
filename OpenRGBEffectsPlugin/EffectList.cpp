@@ -15,8 +15,7 @@ EffectList::EffectList(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->start_stop_all_button->setFont(OpenRGBPluginsFont::GetFont());
-    ui->start_stop_all_button->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::play_track_next_o));
+    ApplyIconFonts();
     EnableStartStopButton(false);
 
     main_menu = new QMenu(ui->new_effect);
@@ -128,6 +127,7 @@ void EffectList::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ApplyIconFonts();
     }
 }
 
@@ -172,5 +172,12 @@ void EffectList::ResetMenus()
 
     search_action->setDefaultWidget(effect_search);
     main_menu->addAction(search_action);
+}
+
+void EffectList::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->start_stop_all_button->setFont(icon_font);
+    ui->start_stop_all_button->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::play_track_next_o));
 }
 

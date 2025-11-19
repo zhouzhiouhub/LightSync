@@ -13,14 +13,7 @@ DeviceListItem::DeviceListItem(std::vector<ControllerZone*> controller_zones, bo
     ui->setupUi(this);
     ui->brightness->setVisible(false);
 
-    ui->danger_not_direct->setFont(OpenRGBPluginsFont::GetFont());
-    ui->enable->setFont(OpenRGBPluginsFont::GetFont());
-    ui->reverse->setFont(OpenRGBPluginsFont::GetFont());
-
-    ui->danger_not_direct->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::danger));
-    ui->reverse->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::arrows_exchange));
-
-    UpdateCheckState();
+    ApplyIconFonts();
 
     direct = has_direct;
 
@@ -49,6 +42,7 @@ void DeviceListItem::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ApplyIconFonts();
     }
 }
 
@@ -82,6 +76,19 @@ void DeviceListItem::SetEnabled(bool state)
     {
         item->SetEnableChecked(state);
     }
+
+    UpdateCheckState();
+}
+
+void DeviceListItem::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->danger_not_direct->setFont(icon_font);
+    ui->enable->setFont(icon_font);
+    ui->reverse->setFont(icon_font);
+
+    ui->danger_not_direct->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::danger));
+    ui->reverse->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::arrows_exchange));
 
     UpdateCheckState();
 }

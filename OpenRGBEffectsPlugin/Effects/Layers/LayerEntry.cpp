@@ -12,11 +12,7 @@ LayerEntry::LayerEntry(QWidget *parent, RGBEffect* effect) :
 {
     ui->setupUi(this);
 
-    ui->edit->setFont(OpenRGBPluginsFont::GetFont());
-    ui->remove->setFont(OpenRGBPluginsFont::GetFont());
-
-    ui->edit->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::options));
-    ui->remove->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::close));
+    ApplyIconFonts();
 
     PopulateCombos();
 
@@ -51,6 +47,7 @@ void LayerEntry::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         PopulateCombos();
+        ApplyIconFonts();
     }
 }
 
@@ -113,6 +110,16 @@ json LayerEntry::ToJson()
     j["composer_fn"]        = ui->composer_fn->currentIndex();
 
     return j;
+}
+
+void LayerEntry::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->edit->setFont(icon_font);
+    ui->remove->setFont(icon_font);
+
+    ui->edit->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::options));
+    ui->remove->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::close));
 }
 
 LayerEntry* LayerEntry::FromJson(json j)

@@ -6,6 +6,24 @@
 #include "OpenRGBEffectSettings.h"
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QResource>
+
+namespace {
+struct EffectsPluginResources
+{
+    EffectsPluginResources()
+    {
+        Q_INIT_RESOURCE(resources);
+    }
+
+    ~EffectsPluginResources()
+    {
+        Q_CLEANUP_RESOURCE(resources);
+    }
+};
+
+const EffectsPluginResources effects_plugin_resources;
+} // namespace
 
 ResourceManagerInterface* OpenRGBEffectsPlugin::RMPointer = nullptr;
 

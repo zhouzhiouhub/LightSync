@@ -14,12 +14,7 @@ ZoneListItem::ZoneListItem(ControllerZone* controller_zone) :
     const QString displayName = QString::fromUtf8(name.c_str());
     ui->zone_name->setText(displayName);
 
-    ui->enable->setFont(OpenRGBPluginsFont::GetFont());
-    ui->reverse->setFont(OpenRGBPluginsFont::GetFont());
-
-    ui->reverse->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::arrows_exchange));
-
-    UpdateCheckState();
+    ApplyIconFonts();
 }
 
 ZoneListItem::~ZoneListItem()
@@ -32,6 +27,7 @@ void ZoneListItem::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ApplyIconFonts();
     }
 }
 
@@ -110,4 +106,13 @@ void ZoneListItem::UpdateCheckState()
                     OpenRGBPluginsFont::icon(OpenRGBPluginsFont::check_o):
                     OpenRGBPluginsFont::icon(OpenRGBPluginsFont::check)
                     );
+}
+
+void ZoneListItem::ApplyIconFonts()
+{
+    const QFont icon_font = OpenRGBPluginsFont::GetFont();
+    ui->enable->setFont(icon_font);
+    ui->reverse->setFont(icon_font);
+    ui->reverse->setText(OpenRGBPluginsFont::icon(OpenRGBPluginsFont::arrows_exchange));
+    UpdateCheckState();
 }
